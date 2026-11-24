@@ -1,0 +1,2079 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniPath AI Pro — Davlat Universitetlari, Grantlar va Stipendiyalar Platformasi</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace'],
+        },
+        colors: {
+          navy: { 950: '#040914', 900: '#0a1224', 800: '#111d38' },
+          brand: { blue: '#2563eb', cyan: '#06b6d4', green: '#10b981' }
+        }
+      }
+    }
+  };
+</script>
+<style>
+  :root {
+    --bg: #f1f5f9;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --muted: #64748b;
+    --border: rgba(15, 23, 42, 0.1);
+  }
+  html.dark {
+    --bg: #040914;
+    --surface: #0a1224;
+    --surface-2: #111d38;
+    --ink: #f8fafc;
+    --ink-2: #cbd5e1;
+    --muted: #94a3b8;
+    --border: rgba(148, 163, 184, 0.15);
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  .card-surface {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .card-surface-2 {
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+  }
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  html.dark .glass-panel {
+    background: rgba(10, 18, 36, 0.85);
+  }
+  .ai-gradient-border {
+    position: relative;
+    background: var(--surface);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(37, 99, 235, 0.35);
+    box-shadow: 0 20px 50px -12px rgba(37, 99, 235, 0.18);
+  }
+  .ai-prose h4 {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-top: 0.9rem;
+    margin-bottom: 0.35rem;
+    color: #2563eb;
+  }
+  html.dark .ai-prose h4 {
+    color: #38bdf8;
+  }
+  .ai-prose p {
+    margin-bottom: 0.6rem;
+  }
+  .ai-prose ul {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    margin-bottom: 0.65rem;
+  }
+  .ai-prose li {
+    margin-bottom: 0.3rem;
+  }
+  .ai-shimmer {
+    background: linear-gradient(90deg, rgba(37,99,235,0.08) 25%, rgba(6,182,212,0.16) 50%, rgba(37,99,235,0.08) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.6s infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+</head>
+<body class="min-h-screen antialiased selection:bg-brand-blue selection:text-white">
+
+<!-- Toast Notification Container -->
+<div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+<!-- IMPROVED ONBOARDING / REGISTRATION MODAL -->
+<div id="onboarding-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-5 bg-navy-950/85 backdrop-blur-md overflow-y-auto" onclick="if(event.target===this && state.userReg) closeOnboardingModal()">
+  <div class="ai-gradient-border w-full max-w-4xl relative overflow-hidden my-auto">
+    <div class="grid lg:grid-cols-12">
+      <!-- Left Visual Pitch Column -->
+      <div class="lg:col-span-5 bg-gradient-to-br from-navy-950 via-brand-blue to-brand-cyan p-6 sm:p-7 text-white flex flex-col justify-between relative overflow-hidden">
+        <svg viewBox="0 0 300 400" class="absolute inset-0 w-full h-full opacity-15 pointer-events-none" preserveAspectRatio="none">
+          <circle cx="250" cy="60" r="110" fill="#ffffff"/>
+          <circle cx="40" cy="350" r="130" fill="#06b6d4"/>
+          <path d="M0,280 L80,220 L160,260 L240,180 L300,220 L300,400 L0,400 Z" fill="#ffffff"/>
+        </svg>
+        <div class="relative z-10 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[11px] font-mono font-bold tracking-wider uppercase">
+            <span>🎓</span><span>UniPath AI Pro v3.0</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+            Global Grantlar va Davlat OTMlariga Aqlli Kirish
+          </h2>
+          <p class="text-xs sm:text-sm text-white/90 leading-relaxed">
+            Profilingizni bir marta sozlang — AI tizim sizning GPA, IELTS va byudjetingizga mos universitetlar, <strong>Türkiye Bursları</strong>, <strong>Stipendium Hungaricum</strong>, <strong>MEXT</strong> va <strong>DAAD</strong> dasturlarini saralaydi.
+          </p>
+        </div>
+
+        <div class="relative z-10 mt-6 space-y-2.5 text-xs">
+          <div class="flex items-center gap-2.5 bg-white/10 backdrop-blur-sm px-3.5 py-2.5 rounded-xl border border-white/15">
+            <span class="text-base">🏛️</span>
+            <span><strong>32+ davlat</strong> va <strong>50+ davlat OTM</strong> bazasi</span>
+          </div>
+          <div class="flex items-center gap-2.5 bg-white/10 backdrop-blur-sm px-3.5 py-2.5 rounded-xl border border-white/15">
+            <span class="text-base">🏅</span>
+            <span><strong>12+ xalqaro stipendiya</strong> (Türkiye Bursları, GKS, Chevening)</span>
+          </div>
+          <div class="flex items-center gap-2.5 bg-white/10 backdrop-blur-sm px-3.5 py-2.5 rounded-xl border border-white/15">
+            <span class="text-base">🤖</span>
+            <span>Oldindan tayyorlangan <strong>Smart AI Chatbot</strong> & hujjat generatori</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Form Column -->
+      <div class="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-center relative">
+        <button type="button" id="close-onboarding-btn" onclick="closeOnboardingModal()" class="hidden absolute top-4 right-4 w-9 h-9 rounded-xl card-surface-2 items-center justify-center text-base hover:bg-red-500/10 hover:text-red-500 transition">✕</button>
+
+        <div class="mb-5">
+          <span class="text-[11px] font-mono uppercase tracking-widest text-brand-blue dark:text-brand-cyan font-bold">Shaxsiy Kabinet • Tezkor Ro‘yxatdan O‘tish</span>
+          <h3 class="text-xl sm:text-2xl font-extrabold mt-0.5">Ma’lumotlaringizni kiriting</h3>
+          <p class="text-xs sm:text-sm text-[var(--ink-2)] mt-1">
+            Ism-familiyangiz va o‘quv muassasangiz avtomatik ravishda <strong>Motivation Letter</strong> va AI tavsiyalarga qo‘shiladi.
+          </p>
+        </div>
+
+        <form id="registration-form" onsubmit="handleRegistrationSubmit(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div>
+              <label for="reg-firstname" class="block text-xs font-semibold text-[var(--muted)] mb-1">Ism *</label>
+              <input id="reg-firstname" type="text" required placeholder="Masalan: Azizbek" class="w-full px-3.5 py-2.5 rounded-xl card-surface-2 text-sm font-medium focus:outline-none focus:border-brand-blue">
+            </div>
+            <div>
+              <label for="reg-lastname" class="block text-xs font-semibold text-[var(--muted)] mb-1">Familiya *</label>
+              <input id="reg-lastname" type="text" required placeholder="Masalan: Karimov" class="w-full px-3.5 py-2.5 rounded-xl card-surface-2 text-sm font-medium focus:outline-none focus:border-brand-blue">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            <div class="sm:col-span-2">
+              <label for="reg-institution" class="block text-xs font-semibold text-[var(--muted)] mb-1">O‘qiydigan joyingiz (Maktab / Litsey / OTM) *</label>
+              <input id="reg-institution" type="text" required placeholder="Masalan: Toshkent TATU yoki Litsey nomi" class="w-full px-3.5 py-2.5 rounded-xl card-surface-2 text-sm font-medium focus:outline-none focus:border-brand-blue">
+            </div>
+            <div>
+              <label for="reg-age" class="block text-xs font-semibold text-[var(--muted)] mb-1">Yoshingiz *</label>
+              <input id="reg-age" type="number" min="13" max="60" required placeholder="18" class="w-full px-3.5 py-2.5 rounded-xl card-surface-2 text-sm font-mono font-semibold focus:outline-none focus:border-brand-blue">
+            </div>
+          </div>
+
+          <!-- Quick Preset Persona Chips -->
+          <div>
+            <div class="text-[11px] font-semibold text-[var(--muted)] mb-1.5">Tezkor namuna profillar (1 bosishda to‘ldirish):</div>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" onclick="applyPersonaPreset('abituriyent')" class="px-3 py-1.5 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-semibold transition">
+                🎓 Litsey / Maktab bitiruvchisi (Bakalavr)
+              </button>
+              <button type="button" onclick="applyPersonaPreset('magistr')" class="px-3 py-1.5 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-semibold transition">
+                🔬 Bakalavr talabasi / Bitiruvchi (Magistratura)
+              </button>
+              <button type="button" onclick="applyPersonaPreset('turkiya')" class="px-3 py-1.5 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-semibold transition">
+                🇹🇷 Türkiye Bursları / Stipendiya izlovchi
+              </button>
+            </div>
+          </div>
+
+          <div class="pt-2 space-y-2.5">
+            <button type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-brand-blue to-brand-cyan hover:opacity-95 text-white font-bold text-sm shadow-xl shadow-brand-blue/25 transition flex items-center justify-center gap-2">
+              <span>Platformaga kirish va AI tahlilni boshlash</span>
+              <span>→</span>
+            </button>
+            <button type="button" onclick="fillDemoRegistration()" class="w-full py-2.5 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-semibold text-[var(--ink-2)] transition">
+              🎭 Mehmon sifatida tezkor kirish (Demo profil)
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI STRATEGY MODAL FOR INDIVIDUAL UNIVERSITY -->
+<div id="ai-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/75 backdrop-blur-sm" onclick="if(event.target===this) closeAiModal()">
+  <div class="ai-gradient-border w-full max-w-2xl max-h-[88vh] flex flex-col overflow-hidden">
+    <div class="p-5 sm:p-6 border-b border-[var(--border)] flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-brand-cyan text-white flex items-center justify-center font-bold text-lg shadow">✨</div>
+        <div>
+          <span class="text-[11px] font-mono uppercase tracking-wider text-brand-blue dark:text-brand-cyan font-semibold">AI Qabul Strategiyasi</span>
+          <h3 id="ai-modal-title" class="text-base sm:text-lg font-bold leading-tight">Universitet Tahlili</h3>
+        </div>
+      </div>
+      <button onclick="closeAiModal()" class="w-9 h-9 rounded-xl card-surface-2 flex items-center justify-center text-lg hover:bg-red-500/10 hover:text-red-500 transition">✕</button>
+    </div>
+    <div id="ai-modal-body" class="p-5 sm:p-6 overflow-y-auto space-y-4 text-sm leading-relaxed"></div>
+    <div class="p-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-3 bg-[var(--surface-2)]">
+      <span class="text-xs text-[var(--muted)]">UniPath Smart AI • Shaxsiy profil asosida</span>
+      <div class="flex items-center gap-2">
+        <button id="ai-modal-doc-btn" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-blue text-white hover:bg-blue-600 transition">✍️ Motivation Letter yozish</button>
+        <button onclick="closeAiModal()" class="px-4 py-2 rounded-xl text-xs font-semibold card-surface hover:border-brand-blue transition">Yopish</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VISUAL UNIVERSITY INFOGRAPHIC DETAIL MODAL -->
+<div id="uni-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-5 bg-navy-950/80 backdrop-blur-md" onclick="if(event.target===this) closeUniDetailModal()">
+  <div class="card-surface w-full max-w-4xl max-h-[92vh] rounded-3xl flex flex-col shadow-2xl overflow-hidden">
+    <div id="uni-detail-content" class="overflow-y-auto flex-1"></div>
+    <div id="uni-detail-footer" class="p-4 sm:px-6 border-t border-[var(--border)] bg-[var(--surface-2)] flex flex-wrap items-center justify-between gap-3"></div>
+  </div>
+</div>
+
+<!-- STICKY GLASS NAVIGATION -->
+<header class="sticky top-0 z-40 glass-panel border-b border-[var(--border)]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+    <a href="#" class="flex items-center gap-2.5 shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-blue to-brand-cyan text-white flex items-center justify-center font-extrabold text-base shadow">U</div>
+      <div>
+        <span class="font-extrabold text-base sm:text-lg tracking-tight">UniPath <span class="text-brand-blue dark:text-brand-cyan">AI Pro</span></span>
+        <span class="hidden md:inline-block ml-2 text-[10px] font-mono px-2 py-0.5 rounded-full bg-brand-blue/10 text-brand-blue dark:text-brand-cyan font-bold">GLOBAL GRANTS EDITION</span>
+      </div>
+    </a>
+
+    <nav class="hidden xl:flex items-center gap-5 text-xs font-semibold text-[var(--ink-2)]">
+      <a href="#profile-builder" class="hover:text-brand-blue transition">1. Profil & Talablar</a>
+      <a href="#workspace" onclick="switchWorkspaceTab('matches')" class="hover:text-brand-blue transition">2. Davlat OTMlari</a>
+      <a href="#workspace" onclick="switchWorkspaceTab('scholarships')" class="hover:text-brand-blue transition">3. 🏅 Grant & Stipendiyalar</a>
+      <a href="#workspace" onclick="switchWorkspaceTab('ai-chat')" class="hover:text-brand-blue transition">4. ✨ AI Maslahatchi</a>
+      <a href="#workspace" onclick="switchWorkspaceTab('ai-docs')" class="hover:text-brand-blue transition">5. ✍️ Hujjatlar Studio</a>
+      <a href="#workspace" onclick="switchWorkspaceTab('roadmap')" class="hover:text-brand-blue transition">6. Dedlaynlar</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <!-- User Profile Badge -->
+      <div id="user-nav-pill" class="hidden items-center gap-2 px-3 py-1.5 rounded-xl card-surface-2 text-xs">
+        <span class="w-2 h-2 rounded-full bg-brand-green"></span>
+        <span id="user-nav-name" class="font-bold max-w-[140px] sm:max-w-[230px] truncate">Talaba</span>
+        <button onclick="openOnboardingModal(true)" title="Profilni tahrirlash" class="p-1 rounded-lg hover:bg-brand-blue/15 text-brand-blue dark:text-brand-cyan transition">✏️</button>
+        <button onclick="logoutUserRegistration()" title="Chiqish" class="p-1 rounded-lg hover:bg-red-500/15 text-red-500 transition">⏻</button>
+      </div>
+
+      <button onclick="openOnboardingModal(true)" id="login-top-btn" class="px-3 py-1.5 rounded-xl bg-brand-blue/10 text-brand-blue dark:text-brand-cyan hover:bg-brand-blue hover:text-white text-xs font-bold transition">
+        Kirish / Profil
+      </button>
+
+      <button onclick="toggleTheme()" aria-label="Mavzuni o‘zgartirish" class="w-9 h-9 rounded-xl card-surface-2 flex items-center justify-center text-base hover:border-brand-blue transition">
+        <span id="theme-icon">🌙</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="relative overflow-hidden py-9 sm:py-12 border-b border-[var(--border)]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid lg:grid-cols-12 gap-6 items-center">
+      <div class="lg:col-span-8 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full card-surface text-xs font-semibold shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-brand-green animate-ping"></span>
+          <span class="text-brand-blue dark:text-brand-cyan font-mono">SMART AI • 25+ DAVLAT • 44+ DAVLAT OTM • 12+ GRANT DASTURLARI</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold leading-[1.12] tracking-tight">
+          Xalqaro davlat universitetlari, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-cyan">Türkiye Bursları</span> va 100% hukumat grantlari
+        </h1>
+
+        <p class="text-sm sm:text-base text-[var(--ink-2)] leading-relaxed max-w-2xl">
+          GPA, IELTS va byudjet ko‘rsatkichlaringizni kiriting — tizim har bir universitet uchun <strong>Fit Score</strong>, maxsus <strong>Scholarship (Grant & Stipendiya)</strong> katalogi, oldindan tayyorlangan <strong>AI Chatbot</strong> va shaxsiy <strong>Motivation Letter</strong> tayyorlab beradi.
+        </p>
+
+        <div class="pt-1 flex flex-wrap items-center gap-2.5">
+          <a href="#workspace" onclick="switchWorkspaceTab('matches')" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-brand-blue to-brand-cyan text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-blue/25 hover:opacity-95 transition">
+            🏛️ Universitetlarni ko‘rish
+          </a>
+          <a href="#workspace" onclick="switchWorkspaceTab('scholarships')" class="px-5 py-3 rounded-2xl card-surface hover:border-brand-blue font-bold text-xs sm:text-sm transition">
+            🏅 Grant & Stipendiyalar
+          </a>
+          <a href="#workspace" onclick="switchWorkspaceTab('ai-chat')" class="px-5 py-3 rounded-2xl card-surface hover:border-brand-blue font-bold text-xs sm:text-sm transition">
+            ✨ AI Chatbot bilan suhbat
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Stats Bento -->
+      <div class="lg:col-span-4 grid grid-cols-2 gap-3">
+        <div class="card-surface rounded-2xl p-4">
+          <div class="text-[11px] font-mono uppercase text-[var(--muted)] font-bold">Davlatlar</div>
+          <div class="text-2xl sm:text-3xl font-extrabold font-mono text-brand-blue dark:text-brand-cyan mt-1">25+</div>
+          <div class="text-[11px] text-[var(--ink-2)] mt-0.5">Turkiya, Germaniya, Koreya, Vengriya...</div>
+        </div>
+        <div class="card-surface rounded-2xl p-4">
+          <div class="text-[11px] font-mono uppercase text-[var(--muted)] font-bold">Davlat OTM</div>
+          <div class="text-2xl sm:text-3xl font-extrabold font-mono text-brand-green mt-1">44+</div>
+          <div class="text-[11px] text-[var(--ink-2)] mt-0.5">Bakalavr & Magistratura</div>
+        </div>
+        <div class="card-surface rounded-2xl p-4">
+          <div class="text-[11px] font-mono uppercase text-[var(--muted)] font-bold">Scholarship</div>
+          <div class="text-2xl sm:text-3xl font-extrabold font-mono text-amber-500 mt-1">12+</div>
+          <div class="text-[11px] text-[var(--ink-2)] mt-0.5">100% Full Grant & Stipendiya</div>
+        </div>
+        <div class="card-surface rounded-2xl p-4">
+          <div class="text-[11px] font-mono uppercase text-[var(--muted)] font-bold">AI Yordamchi</div>
+          <div class="text-2xl sm:text-3xl font-extrabold font-mono text-brand-blue dark:text-brand-cyan mt-1">24/7</div>
+          <div class="text-[11px] text-[var(--ink-2)] mt-0.5">Tayyor ssenariylar & SOP</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 1: STUDENT PROFILE BUILDER -->
+<section id="profile-builder" class="py-7 sm:py-9">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="card-surface rounded-3xl p-5 sm:p-7 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <div>
+          <span class="text-[11px] font-mono uppercase tracking-wider text-brand-blue dark:text-brand-cyan font-bold">1-Qadam • Akademik Profil</span>
+          <h2 class="text-lg sm:text-xl font-extrabold">Sizning ko‘rsatkichlaringiz (Real vaqtda moslashadi)</h2>
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <span id="matched-count-badge" class="px-3 py-1.5 rounded-xl bg-brand-blue/10 text-brand-blue dark:text-brand-cyan font-bold font-mono">0 dastur topildi</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-[var(--muted)] mb-1.5">Ta’lim bosqichi</label>
+          <select id="prof-level" onchange="updateProfileAndRender()" class="w-full px-3.5 py-2.5 rounded-xl card-surface-2 text-sm font-semibold focus:outline-none focus:border-brand-blue">
+            <option value="B">Bakalavr (Bachelor's)</option>
+            <option value="M">Magistratura (Master's)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[var(--muted)] mb-1.5">Soha / Yo‘nalish</label>
+          <select id="prof-field" onchange="updateProfileAndRender()" class="w-full px-3.5 py-2.5 rounded-xl card-surface-2 text-sm font-semibold focus:outline-none focus:border-brand-blue">
+            <option value="ALL">Barcha yo‘nalishlar</option>
+            <option value="CS">IT, Computer Science & AI</option>
+            <option value="ENG">Muhandislik (Engineering)</option>
+            <option value="BIZ">Biznes, Moliya & Iqtisodiyot</option>
+            <option value="MED">Tibbiyot & Biotexnologiya</option>
+            <option value="IR">Xalqaro munosabatlar & Huquq</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-xs font-semibold mb-1.5">
+            <span class="text-[var(--muted)]">GPA (5.0 tizimda)</span>
+            <span id="val-gpa" class="font-mono font-bold text-brand-blue dark:text-brand-cyan">4.5</span>
+          </div>
+          <input id="prof-gpa" type="range" min="3.0" max="5.0" step="0.1" value="4.5" oninput="updateProfileAndRender()" class="w-full accent-brand-blue cursor-pointer">
+        </div>
+
+        <div>
+          <div class="flex justify-between text-xs font-semibold mb-1.5">
+            <span class="text-[var(--muted)]">IELTS bali</span>
+            <span id="val-ielts" class="font-mono font-bold text-brand-blue dark:text-brand-cyan">6.5</span>
+          </div>
+          <input id="prof-ielts" type="range" min="5.0" max="8.5" step="0.5" value="6.5" oninput="updateProfileAndRender()" class="w-full accent-brand-blue cursor-pointer">
+        </div>
+
+        <div>
+          <div class="flex justify-between text-xs font-semibold mb-1.5">
+            <span class="text-[var(--muted)]">Yillik byudjet (USD)</span>
+            <span id="val-budget" class="font-mono font-bold text-brand-green">$2,000</span>
+          </div>
+          <input id="prof-budget" type="range" min="0" max="20000" step="500" value="2000" oninput="updateProfileAndRender()" class="w-full accent-brand-green cursor-pointer">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 2: MAIN WORKSPACE TABS -->
+<main id="workspace" class="pb-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
+
+    <!-- Workspace Navigation Tabs -->
+    <div class="flex items-center gap-2 p-1.5 rounded-2xl card-surface overflow-x-auto no-scrollbar max-w-full w-fit">
+      <button id="tab-btn-matches" onclick="switchWorkspaceTab('matches')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition bg-brand-blue text-white shadow shrink-0">
+        🏛️ Mos Dasturlar (<span id="tab-match-count">0</span>)
+      </button>
+      <button id="tab-btn-scholarships" onclick="switchWorkspaceTab('scholarships')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--ink-2)] hover:text-brand-blue shrink-0">
+        🏅 Grant & Stipendiyalar (<span id="tab-schol-count">12</span>)
+      </button>
+      <button id="tab-btn-ai-chat" onclick="switchWorkspaceTab('ai-chat')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--ink-2)] hover:text-brand-blue shrink-0">
+        ✨ AI Chatbot
+      </button>
+      <button id="tab-btn-ai-docs" onclick="switchWorkspaceTab('ai-docs')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--ink-2)] hover:text-brand-blue shrink-0">
+        ✍️ AI Hujjatlar Studio
+      </button>
+      <button id="tab-btn-roadmap" onclick="switchWorkspaceTab('roadmap')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-[var(--ink-2)] hover:text-brand-blue shrink-0">
+        📅 Shortlist & Dedlaynlar (<span id="tab-shortlist-count">0</span>)
+      </button>
+    </div>
+
+    <!-- TAB 1: UNIVERSITY MATCHES -->
+    <section id="panel-matches" class="space-y-5">
+      <!-- Filters Bar -->
+      <div class="card-surface rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-2.5 flex-1">
+          <input id="filter-search" type="text" oninput="renderPrograms()" placeholder="🔍 Universitet, shahar yoki dastur nomi..." class="w-full sm:w-64 px-3.5 py-2 rounded-xl card-surface-2 text-xs sm:text-sm focus:outline-none focus:border-brand-blue">
+
+          <select id="filter-country" onchange="renderPrograms()" class="px-3 py-2 rounded-xl card-surface-2 text-xs sm:text-sm font-medium focus:outline-none focus:border-brand-blue">
+            <option value="ALL">🌍 Barcha davlatlar (25+)</option>
+          </select>
+
+          <select id="filter-tier" onchange="renderPrograms()" class="px-3 py-2 rounded-xl card-surface-2 text-xs sm:text-sm font-medium focus:outline-none focus:border-brand-blue">
+            <option value="ALL">📊 Barcha toifalar</option>
+            <option value="Safety">🟢 Safety (Yuqori ehtimol)</option>
+            <option value="Match">🔵 Match (Mos)</option>
+            <option value="Reach">🟡 Reach (Yuqori raqobat)</option>
+          </select>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3 text-xs font-semibold">
+          <label class="inline-flex items-center gap-2 cursor-pointer px-3 py-2 rounded-xl card-surface-2">
+            <input id="filter-grant-only" type="checkbox" onchange="renderPrograms()" class="accent-brand-blue rounded">
+            <span>🏅 Faqat grant borlari</span>
+          </label>
+          <label class="inline-flex items-center gap-2 cursor-pointer px-3 py-2 rounded-xl card-surface-2">
+            <input id="sim-grant-win" type="checkbox" checked onchange="renderPrograms()" class="accent-brand-green rounded">
+            <span>💰 Grant yutish simulyatsiyasi</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Programs Grid -->
+      <div id="programs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- TAB 2: SCHOLARSHIPS & GRANTS DIRECTORY (TURKIYA BURSLARI & GLOBAL) -->
+    <section id="panel-scholarships" class="hidden space-y-5">
+      <div class="card-surface rounded-3xl p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-[11px] font-mono uppercase tracking-wider text-amber-500 font-bold">Xalqaro Grantlar & Stipendiyalar Katalogi</span>
+          <h3 class="text-lg sm:text-xl font-extrabold mt-0.5">Türkiye Bursları va 100% Davlat Grant Dasturlari</h3>
+          <p class="text-xs sm:text-sm text-[var(--ink-2)] mt-1">
+            Har bir grant dasturi bo‘yicha qoplanadigan xarajatlar, talablar, dedlayn va AI maslahatchida tezkor so‘rov yuborish imkoniyati mavjud.
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="filterScholarships('ALL')" id="sch-filter-ALL" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-blue text-white transition">Barchasi</button>
+          <button onclick="filterScholarships('TR')" id="sch-filter-TR" class="px-3.5 py-2 rounded-xl text-xs font-bold card-surface-2 hover:border-brand-blue transition">🇹🇷 Türkiye Bursları</button>
+          <button onclick="filterScholarships('EU')" id="sch-filter-EU" class="px-3.5 py-2 rounded-xl text-xs font-bold card-surface-2 hover:border-brand-blue transition">🇪🇺 Yevropa</button>
+          <button onclick="filterScholarships('ASIA')" id="sch-filter-ASIA" class="px-3.5 py-2 rounded-xl text-xs font-bold card-surface-2 hover:border-brand-blue transition">🌏 Osiyo & Boshqa</button>
+        </div>
+      </div>
+
+      <div id="scholarships-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- TAB 3: PRE-TRAINED / SCRIPTED SMART AI CHATBOT -->
+    <section id="panel-ai-chat" class="hidden">
+      <div class="grid lg:grid-cols-12 gap-6">
+        <!-- Pre-scripted Quick Prompt Scenarios -->
+        <div class="lg:col-span-4 card-surface rounded-3xl p-5 space-y-4 h-fit">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-brand-blue/15 text-brand-blue dark:text-brand-cyan flex items-center justify-center font-bold">🤖</div>
+              <div>
+                <h3 class="font-bold text-sm">Oldindan Tayyorlangan Savollar</h3>
+                <p class="text-[11px] text-[var(--muted)]">Tayyor AI ssenariylar — bosing va javob oling</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 font-bold">SCRIPTED AI</span>
+          </div>
+
+          <div class="space-y-2">
+            <button onclick="sendQuickPrompt('Türkiye Bursları haqida batafsil aytib ber (talablar, stipendiya, dedlayn).')" class="w-full text-left p-3 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-medium transition">
+              🇹🇷 Türkiye Bursları haqida batafsil ma’lumot
+            </button>
+            <button onclick="sendQuickPrompt('Qaysi universitetga kirishim osonroq?')" class="w-full text-left p-3 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-medium transition">
+              🎯 Qaysi universitetga kirishim osonroq?
+            </button>
+            <button onclick="sendQuickPrompt('IELTS 6.5 bilan qayerga topshirsam bo‘ladi?')" class="w-full text-left p-3 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-medium transition">
+              📘 IELTS 6.5 bilan qayerga topshirsam bo‘ladi?
+            </button>
+            <button onclick="sendQuickPrompt('Germaniya yoki Vengriya grantlari haqida ayt.')" class="w-full text-left p-3 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-medium transition">
+              🇩🇪🇭🇺 Germaniya va Vengriya grantlari
+            </button>
+            <button onclick="sendQuickPrompt('GKS (Koreya), MEXT (Yaponiya) va Chevening grantlari qanday ishlaydi?')" class="w-full text-left p-3 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-medium transition">
+              🌏 GKS (Koreya), MEXT (Yaponiya) va Chevening
+            </button>
+            <button onclick="sendQuickPrompt('Motivation letter yozishda nimaga e’tibor berish kerak?')" class="w-full text-left p-3 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-medium transition">
+              ✍️ Motivation letter yozish sirlari
+            </button>
+            <button onclick="sendQuickPrompt('Mening profilim uchun eng yaxshi 5 ta universitet portfelini tuzib ber.')" class="w-full text-left p-3 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-medium transition">
+              📊 Men uchun 5 ta universitet portfelini tuzib ber
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Box -->
+        <div class="lg:col-span-8 ai-gradient-border flex flex-col h-[580px] overflow-hidden">
+          <div class="p-4 sm:p-5 border-b border-[var(--border)] flex items-center justify-between gap-2">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-brand-cyan text-white flex items-center justify-center font-bold text-lg">🤖</div>
+              <div>
+                <h3 class="font-bold text-sm sm:text-base">UniPath AI Chatbot (Tayyor Bilim Bazasi)</h3>
+                <p class="text-[11px] text-brand-green font-semibold">● Tayyor ssenariylar faol • Profil ko‘rsatkichlaringizga moslashadi</p>
+              </div>
+            </div>
+            <button onclick="clearAiChat()" class="px-3 py-1.5 rounded-xl card-surface-2 text-xs font-semibold hover:text-red-500 transition">Tozalash</button>
+          </div>
+
+          <div id="ai-chat-messages" class="flex-1 p-4 sm:p-5 overflow-y-auto space-y-4"></div>
+
+          <form onsubmit="handleChatSubmit(event)" class="p-3 sm:p-4 border-t border-[var(--border)] bg-[var(--surface-2)] flex items-center gap-2">
+            <input id="ai-chat-input" type="text" placeholder="Masalan: Türkiye Burslari, IELTS 6.5, Germaniya, grantlar, portfel..." class="flex-1 px-4 py-3 rounded-xl card-surface text-xs sm:text-sm focus:outline-none focus:border-brand-blue">
+            <button id="ai-chat-send-btn" type="submit" class="px-5 py-3 rounded-xl bg-brand-blue hover:bg-blue-600 text-white font-bold text-xs sm:text-sm transition shrink-0">
+              Yuborish →
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: AI DOCUMENT STUDIO -->
+    <section id="panel-ai-docs" class="hidden">
+      <div class="grid lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-5 card-surface rounded-3xl p-5 sm:p-6 space-y-4 h-fit">
+          <div>
+            <span class="text-[11px] font-mono uppercase text-brand-blue dark:text-brand-cyan font-bold">AI Hujjatlar Studio</span>
+            <h3 class="text-lg font-extrabold">Shaxsiylashtirilgan Hujjat Yaratish</h3>
+            <p class="text-xs text-[var(--muted)] mt-1">Ism-familiyangiz, yoshingiz va o‘qish joyingiz avtomatik ravishda hujjatga kiritiladi.</p>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-semibold text-[var(--muted)] mb-1">Universitetni tanlang</label>
+              <select id="doc-uni-select" class="w-full px-3.5 py-2.5 rounded-xl card-surface-2 text-xs sm:text-sm font-semibold focus:outline-none focus:border-brand-blue"></select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-[var(--muted)] mb-1">Hujjat turi</label>
+                <select id="doc-type-select" class="w-full px-3.5 py-2.5 rounded-xl card-surface-2 text-xs sm:text-sm font-semibold focus:outline-none focus:border-brand-blue">
+                  <option value="sop">Motivation Letter (SOP)</option>
+                  <option value="cv">Academic CV Yutuqlar</option>
+                  <option value="email">Professorga Cold Email</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[var(--muted)] mb-1">Hujjat tili</label>
+                <select id="doc-lang-select" class="w-full px-3.5 py-2.5 rounded-xl card-surface-2 text-xs sm:text-sm font-semibold focus:outline-none focus:border-brand-blue">
+                  <option value="en">🇬🇧 Ingliz tili (English)</option>
+                  <option value="uz">🇺🇿 O‘zbek tili</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-[var(--muted)] mb-1">Shaxsiy yutuqlar yoki loyihalaringiz (ixtiyoriy)</label>
+              <textarea id="doc-achievements" rows="3" placeholder="Masalan: Matematika olimpiadasi g‘olibi, Python dasturlash loyihasi, volontyorlik..." class="w-full px-3.5 py-2.5 rounded-xl card-surface-2 text-xs sm:text-sm focus:outline-none focus:border-brand-blue"></textarea>
+            </div>
+
+            <button id="doc-generate-btn" onclick="generateAiDocument()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-brand-blue to-brand-cyan text-white font-bold text-xs sm:text-sm shadow-lg hover:opacity-95 transition flex items-center justify-center gap-2">
+              <span>✨ Smart AI bilan hujjat yaratish</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 card-surface rounded-3xl p-5 sm:p-6 flex flex-col space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
+            <div>
+              <h4 id="doc-output-title" class="font-bold text-sm sm:text-base">Tayyor Hujjat Matni</h4>
+              <span id="doc-word-count" class="text-[11px] font-mono text-[var(--muted)]">0 so‘z</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="copyDocOutput()" class="px-3.5 py-2 rounded-xl card-surface-2 hover:border-brand-blue text-xs font-semibold transition">📋 Nusxalash</button>
+              <button onclick="downloadDocTxt()" class="px-3.5 py-2 rounded-xl bg-brand-blue text-white hover:bg-blue-600 text-xs font-semibold transition">⬇️ .TXT yuklash</button>
+            </div>
+          </div>
+
+          <textarea id="doc-output-area" oninput="updateWordCount()" rows="15" placeholder="Chap tarafdagi parametrlarni tanlab, 'Smart AI bilan hujjat yaratish' tugmasini bosing..." class="w-full flex-1 p-4 rounded-2xl card-surface-2 text-xs sm:text-sm font-mono leading-relaxed focus:outline-none focus:border-brand-blue"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: ROADMAP & DEADLINE TRACKER -->
+    <section id="panel-roadmap" class="hidden space-y-6">
+      <div class="card-surface rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-lg font-extrabold">Shortlist & Hujjat Topshirish Yo‘l Xaritasi</h3>
+          <p class="text-xs text-[var(--muted)] mt-0.5">Tanlangan universitetlar bo‘yicha bosqichma-bosqich vazifalar va dedlaynlar taqvimi</p>
+        </div>
+        <button onclick="exportIcsCalendar()" class="px-4 py-2.5 rounded-xl bg-brand-green text-white font-bold text-xs sm:text-sm shadow hover:opacity-95 transition shrink-0">
+          📅 Taqvimni (.ICS) yuklab olish
+        </button>
+      </div>
+
+      <div id="roadmap-container" class="space-y-4"></div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+// ============================================================================
+// 1. STATE & CONSTANTS
+// ============================================================================
+const COUNTRY_NAMES = {
+  DE: "🇩🇪 Germaniya",
+  HU: "🇭🇺 Vengriya",
+  KR: "🇰🇷 Janubiy Koreya",
+  TR: "🇹🇷 Turkiya",
+  PL: "🇵🇱 Polsha",
+  CZ: "🇨🇿 Chexiya",
+  IT: "🇮🇹 Italiya",
+  FR: "🇫🇷 Fransiya",
+  NL: "🇳🇱 Niderlandiya",
+  CH: "🇨🇭 Shveytsariya",
+  AT: "🇦🇹 Avstriya",
+  SE: "🇸🇪 Shvetsiya",
+  FI: "🇫🇮 Finlyandiya",
+  NO: "🇳🇴 Norvegiya",
+  JP: "🇯🇵 Yaponiya",
+  CN: "🇨🇳 Xitoy",
+  SG: "🇸🇬 Singapur",
+  MY: "🇲🇾 Malayziya",
+  GB: "🇬🇧 Buyuk Britaniya",
+  EE: "🇪🇪 Estoniya",
+  KZ: "🇰🇿 Qozog‘iston",
+  AE: "🇦🇪 BAA",
+  ES: "🇪🇸 Ispaniya",
+  CA: "🇨🇦 Kanada",
+  AU: "🇦🇺 Avstraliya"
+};
+
+const MONTH_NAMES_UZ = [
+  "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
+  "Iyul", "Avgust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"
+];
+
+const state = {
+  userReg: null,
+  profile: {
+    lvl: "B",
+    field: "ALL",
+    gpa: 4.5,
+    ielts: 6.5,
+    budget: 2000
+  },
+  shortlist: ["tr-itu-eng", "hu-elte-cs", "de-tum-cs", "kr-kaist-cs"],
+  completedTasks: {},
+  scholarshipFilter: "ALL"
+};
+
+// ============================================================================
+// 2. EXPANDED PUBLIC UNIVERSITY & GOVERNMENT GRANT DATASET (44 PROGRAMS)
+// ============================================================================
+const PROGRAMS = [
+  // TURKIYA (TÜRKİYE BURSLARI & DAVLAT OTM)
+  { id: "tr-itu-eng", cc: "TR", city: "Istanbul", uni: "Istanbul Technical University (İTÜ)", short: "İTÜ Istanbul", prog: "Civil & Aeronautical Engineering", lvl: "B", field: "ENG", gpa: 4.2, ielts: 6.0, tuition: 2400, grantCover: 2400, govGrant: true, schol: "Türkiye Bursları (100% + yotoqxona + stipendiya)", test: "SAT yoki Attestat ballari", dl: [2, 20] },
+  { id: "tr-metu-cs", cc: "TR", city: "Anqara", uni: "Middle East Technical University (ODTÜ)", short: "METU Ankara", prog: "Computer Engineering", lvl: "B", field: "CS", gpa: 4.5, ielts: 6.5, tuition: 2800, grantCover: 2800, govGrant: true, schol: "Türkiye Bursları (100% + aviachipta)", test: "SAT 1350+ yoki yuqori GPA", dl: [2, 20] },
+  { id: "tr-boun-biz", cc: "TR", city: "Istanbul", uni: "Boğaziçi University", short: "Boğaziçi Univ.", prog: "Economics & International Trade", lvl: "B", field: "BIZ", gpa: 4.6, ielts: 6.5, tuition: 2600, grantCover: 2600, govGrant: true, schol: "Türkiye Bursları (100% Full Grant)", test: "SAT / IB / Yuqori akademik reyting", dl: [2, 20] },
+  { id: "tr-hacettepe-med", cc: "TR", city: "Anqara", uni: "Hacettepe University", short: "Hacettepe Univ.", prog: "Medicine & Health Sciences", lvl: "B", field: "MED", gpa: 4.5, ielts: 6.0, tuition: 3200, grantCover: 3200, govGrant: true, schol: "Türkiye Bursları (100% + stipendiya)", test: "Biologiya/Kimyo ustunligi + suhbat", dl: [2, 20] },
+  { id: "tr-ankara-ir", cc: "TR", city: "Anqara", uni: "Ankara University", short: "Ankara Univ.", prog: "International Relations & Diplomacy", lvl: "M", field: "IR", gpa: 4.2, ielts: 6.0, tuition: 1800, grantCover: 1800, govGrant: true, schol: "Türkiye Bursları Magistratura (100%)", test: "Statement of Purpose + Suhbat", dl: [2, 20] },
+
+  // VENGRIYA (STIPENDIUM HUNGARICUM)
+  { id: "hu-elte-cs", cc: "HU", city: "Budapesht", uni: "Eötvös Loránd University (ELTE)", short: "ELTE Budapest", prog: "Computer Science BSc", lvl: "B", field: "CS", gpa: 4.0, ielts: 5.5, tuition: 6800, grantCover: 6800, govGrant: true, schol: "Stipendium Hungaricum (100% + stipendiya)", test: "Onlayn matematika testi + suhbat", dl: [1, 15] },
+  { id: "hu-bme-eng", cc: "HU", city: "Budapesht", uni: "Budapest University of Technology (BME)", short: "BME Hungary", prog: "Mechanical Engineering BSc", lvl: "B", field: "ENG", gpa: 4.1, ielts: 5.5, tuition: 7200, grantCover: 7200, govGrant: true, schol: "Stipendium Hungaricum (100%)", test: "Matematika va Fizika kirish testi", dl: [1, 15] },
+  { id: "hu-deb-med", cc: "HU", city: "Debretsen", uni: "University of Debrecen", short: "Univ. of Debrecen", prog: "General Medicine (MD)", lvl: "B", field: "MED", gpa: 4.4, ielts: 6.0, tuition: 16900, grantCover: 16900, govGrant: true, schol: "Stipendium Hungaricum (100%)", test: "Biologiya va Kimyo imtihoni", dl: [1, 15] },
+  { id: "hu-corvinus-biz", cc: "HU", city: "Budapesht", uni: "Corvinus University of Budapest", short: "Corvinus Bud.", prog: "International Business & Finance", lvl: "M", field: "BIZ", gpa: 4.3, ielts: 6.5, tuition: 6400, grantCover: 6400, govGrant: true, schol: "Stipendium Hungaricum (100%)", test: "Motivatsion esse + Suhbat", dl: [1, 15] },
+
+  // GERMANIYA (DAAD & DAVLAT OTM)
+  { id: "de-tum-cs", cc: "DE", city: "Myunxen", uni: "Technical University of Munich (TUM)", short: "TUM Munich", prog: "Informatics / Computer Science", lvl: "B", field: "CS", gpa: 4.7, ielts: 6.5, tuition: 0, grantCover: 0, govGrant: true, schol: "Davlat OTM ($0 kontrakt) + DAAD", test: "VPD (Uni-Assist) + Studienkolleg / 1-kurs", dl: [7, 15] },
+  { id: "de-rwth-eng", cc: "DE", city: "Axen", uni: "RWTH Aachen University", short: "RWTH Aachen", prog: "Automotive & Mechanical Engineering", lvl: "M", field: "ENG", gpa: 4.5, ielts: 6.5, tuition: 0, grantCover: 0, govGrant: true, schol: "DAAD EPOS / Davlat OTM ($0)", test: "GRE tavsiya etiladi + Akademik CV", dl: [3, 1] },
+  { id: "de-fu-ir", cc: "DE", city: "Berlin", uni: "Freie Universität Berlin", short: "FU Berlin", prog: "International Relations & Politics", lvl: "M", field: "IR", gpa: 4.4, ielts: 6.5, tuition: 0, grantCover: 0, govGrant: true, schol: "DAAD Helmut-Schmidt / $0 Kontrakt", test: "Motivatsion xat + Tavsiyanoma", dl: [5, 31] },
+  { id: "de-mannheim-biz", cc: "DE", city: "Mangeym", uni: "University of Mannheim", short: "Mannheim Univ.", prog: "Business Administration & Economics", lvl: "M", field: "BIZ", gpa: 4.4, ielts: 6.5, tuition: 1500, grantCover: 1500, govGrant: true, schol: "Deutschlandstipendium / DAAD", test: "GMAT/GRE tavsiya etiladi", dl: [5, 31] },
+
+  // JANUBIY KOREYA (GKS & UNIVERSITET GRANTLARI)
+  { id: "kr-kaist-cs", cc: "KR", city: "Tejon", uni: "KAIST (Korea Advanced Institute of Science)", short: "KAIST Korea", prog: "Computer Science & AI", lvl: "B", field: "CS", gpa: 4.6, ielts: 6.5, tuition: 8500, grantCover: 8500, govGrant: true, schol: "KAIST International Full Scholarship + GKS", test: "Olimpiada / Portfolio + Onlayn suhbat", dl: [1, 12] },
+  { id: "kr-snu-biz", cc: "KR", city: "Seul", uni: "Seoul National University (SNU)", short: "Seoul National Univ.", prog: "Global Business & Economics", lvl: "M", field: "BIZ", gpa: 4.6, ielts: 6.5, tuition: 7800, grantCover: 7800, govGrant: true, schol: "GKS (Global Korea Scholarship 100%)", test: "Elchixona yoki Universitet treki", dl: [2, 28] },
+  { id: "kr-yonsei-ir", cc: "KR", city: "Seul", uni: "Yonsei University (Underwood)", short: "Yonsei Univ.", prog: "International Studies", lvl: "B", field: "IR", gpa: 4.3, ielts: 6.5, tuition: 9200, grantCover: 9200, govGrant: true, schol: "GKS / Underwood Merit Grant", test: "Suhbat + Insho", dl: [3, 15] },
+  { id: "kr-postech-eng", cc: "KR", city: "Pxoxan", uni: "POSTECH (Pohang Univ. of Science & Tech)", short: "POSTECH Korea", prog: "Materials & Robotics Engineering", lvl: "M", field: "ENG", gpa: 4.6, ielts: 6.5, tuition: 7900, grantCover: 7900, govGrant: true, schol: "GKS / POSTECH Full Research Grant", test: "Ilmiy suhbat + Transkript", dl: [3, 10] },
+
+  // ITALIYA, POLSHA, CHEXIYA, ISPANIYA
+  { id: "it-polimi-eng", cc: "IT", city: "Milan", uni: "Politecnico di Milano", short: "PoliMi Italy", prog: "Engineering & Architecture", lvl: "M", field: "ENG", gpa: 4.4, ielts: 6.0, tuition: 4200, grantCover: 4200, govGrant: true, schol: "DSU Regional Grant (€7,000 stipendiya)", test: "Portfolio / Akademik transkript", dl: [3, 10] },
+  { id: "it-unibo-biz", cc: "IT", city: "Bolonya", uni: "University of Bologna", short: "Univ. of Bologna", prog: "Economics & Finance", lvl: "B", field: "BIZ", gpa: 4.1, ielts: 6.0, tuition: 3500, grantCover: 3500, govGrant: true, schol: "ER.GO Grant + Invest Your Talent", test: "SAT yoki TOLC-E testi", dl: [4, 25] },
+  { id: "it-sapienza-ir", cc: "IT", city: "Rim", uni: "Sapienza University of Rome", short: "Sapienza Rome", prog: "European & International Studies", lvl: "M", field: "IR", gpa: 4.1, ielts: 6.0, tuition: 2900, grantCover: 2900, govGrant: true, schol: "LazioDisco Grant + MAECI", test: "CV + Motivatsion xat", dl: [4, 15] },
+  { id: "pl-uw-biz", cc: "PL", city: "Varshava", uni: "University of Warsaw", short: "Univ. of Warsaw", prog: "International Economics & Management", lvl: "B", field: "BIZ", gpa: 4.0, ielts: 6.0, tuition: 3200, grantCover: 1600, govGrant: false, schol: "NAWA / Universitet 50% chegirmasi", test: "Attestat + Ingliz tili sertifikati", dl: [6, 15] },
+  { id: "pl-pw-cs", cc: "PL", city: "Varshava", uni: "Warsaw University of Technology", short: "Warsaw Tech", prog: "Computer Science & Information Systems", lvl: "B", field: "CS", gpa: 4.1, ielts: 6.0, tuition: 3600, grantCover: 3600, govGrant: true, schol: "Banach NAWA Scholarship (100%)", test: "Matematika ballari", dl: [5, 20] },
+  { id: "cz-cvut-cs", cc: "CZ", city: "Praga", uni: "Czech Technical University in Prague (ČVUT)", short: "ČVUT Prague", prog: "Software Engineering & AI", lvl: "M", field: "CS", gpa: 4.2, ielts: 6.0, tuition: 4800, grantCover: 4800, govGrant: true, schol: "Chexiya Hukumati Granti", test: "Onlayn texnik suhbat", dl: [3, 30] },
+  { id: "es-uc3m-biz", cc: "ES", city: "Madrid", uni: "Universidad Carlos III de Madrid", short: "UC3M Madrid", prog: "Business & International Economics", lvl: "B", field: "BIZ", gpa: 4.2, ielts: 6.0, tuition: 5400, grantCover: 3600, govGrant: true, schol: "Madrid Excellence / Erasmus+ Grant", test: "GPA + Ingliz tili sertifikati", dl: [5, 10] },
+
+  // FRANSIYA, NIDERLANDIYA, SHVEYTSARIYA, AVSTRIYA, SHVETSIYA, FINLYANDIYA
+  { id: "fr-psl-cs", cc: "FR", city: "Parij", uni: "Université PSL (Paris Sciences et Lettres)", short: "PSL Paris", prog: "Artificial Intelligence & Data Science", lvl: "M", field: "CS", gpa: 4.6, ielts: 6.5, tuition: 3900, grantCover: 3900, govGrant: true, schol: "France Excellence Eiffel Scholarship", test: "Ilmiy loyiha tavsifi + CV", dl: [1, 10] },
+  { id: "fr-sciencespo-ir", cc: "FR", city: "Parij", uni: "Sciences Po Paris", short: "Sciences Po", prog: "International Governance & Diplomacy", lvl: "M", field: "IR", gpa: 4.5, ielts: 6.5, tuition: 11000, grantCover: 11000, govGrant: true, schol: "Emile Boutmy / Eiffel Scholarship", test: "Motivatsion esse + Suhbat", dl: [2, 15] },
+  { id: "nl-tudelft-eng", cc: "NL", city: "Delft", uni: "Delft University of Technology (TU Delft)", short: "TU Delft", prog: "Aerospace & Electrical Engineering", lvl: "M", field: "ENG", gpa: 4.7, ielts: 6.5, tuition: 18500, grantCover: 18500, govGrant: true, schol: "Justus & Louise van Effen Full Grant", test: "Motivatsion esse + 2 ta tavsiyanoma", dl: [12, 1] },
+  { id: "nl-uva-biz", cc: "NL", city: "Amsterdam", uni: "University of Amsterdam (UvA)", short: "UvA Amsterdam", prog: "Economics & Business Analytics", lvl: "B", field: "BIZ", gpa: 4.4, ielts: 6.5, tuition: 12400, grantCover: 8000, govGrant: true, schol: "Amsterdam Merit Scholarship (AMS)", test: "Motivatsion xat + Matematika", dl: [3, 1] },
+  { id: "ch-ethz-cs", cc: "CH", city: "Syurix", uni: "ETH Zürich", short: "ETH Zürich", prog: "Computer Science MSc", lvl: "M", field: "CS", gpa: 4.9, ielts: 7.0, tuition: 1700, grantCover: 1700, govGrant: true, schol: "Excellence Scholarship (ESOP)", test: "Pre-proposal + Juda yuqori GPA", dl: [12, 15] },
+  { id: "at-tuwien-cs", cc: "AT", city: "Vena", uni: "TU Wien (Vienna University of Technology)", short: "TU Wien", prog: "Data Science & Software Engineering", lvl: "M", field: "CS", gpa: 4.3, ielts: 6.5, tuition: 1600, grantCover: 1600, govGrant: true, schol: "Ernst Mach Grant / Minimal kontrakt", test: "Bakalavr diplomi mosligi", dl: [4, 30] },
+  { id: "fi-aalto-biz", cc: "FI", city: "Xelsinki", uni: "Aalto University", short: "Aalto Finland", prog: "International Business & Design", lvl: "B", field: "BIZ", gpa: 4.3, ielts: 6.5, tuition: 12000, grantCover: 12000, govGrant: true, schol: "Finland Scholarship (100% + €5,000)", test: "SAT 1300+", dl: [1, 18] },
+  { id: "se-kth-eng", cc: "SE", city: "Stokgolm", uni: "KTH Royal Institute of Technology", short: "KTH Sweden", prog: "Sustainable Energy & Engineering", lvl: "M", field: "ENG", gpa: 4.5, ielts: 6.5, tuition: 15500, grantCover: 15500, govGrant: true, schol: "Swedish Institute (SI) Global Professionals", test: "Yetakchilik tajribasi + CV", dl: [1, 15] },
+
+  // YAPONIYA, XITOY, SINGAPUR, MALAYZIYA, UK, ESTONIYA, QOZOG'ISTON, BAA, KANADA, AVSTRALIYA
+  { id: "jp-utokyo-eng", cc: "JP", city: "Tokio", uni: "The University of Tokyo", short: "UTokyo Japan", prog: "Engineering & Robotics", lvl: "B", field: "ENG", gpa: 4.6, ielts: 6.5, tuition: 4800, grantCover: 4800, govGrant: true, schol: "MEXT Japanese Government Scholarship", test: "MEXT yozma imtihoni + Elchixona suhbati", dl: [5, 15] },
+  { id: "jp-kyoto-med", cc: "JP", city: "Kioto", uni: "Kyoto University", short: "Kyoto Univ.", prog: "Medical & Life Sciences", lvl: "M", field: "MED", gpa: 4.6, ielts: 6.5, tuition: 4900, grantCover: 4900, govGrant: true, schol: "MEXT Scholarship (100% + stipendiya)", test: "Tadqiqot rejasi + Suhbat", dl: [5, 10] },
+  { id: "cn-tsinghua-cs", cc: "CN", city: "Pekin", uni: "Tsinghua University", short: "Tsinghua Univ.", prog: "Computer Science & Technology", lvl: "M", field: "CS", gpa: 4.6, ielts: 6.5, tuition: 5200, grantCover: 5200, govGrant: true, schol: "CSC (Chinese Government Scholarship 100%)", test: "Akademik reja + Suhbat", dl: [1, 20] },
+  { id: "cn-fudan-biz", cc: "CN", city: "Shanxay", uni: "Fudan University", short: "Fudan Univ.", prog: "Global Economy & Finance", lvl: "B", field: "BIZ", gpa: 4.3, ielts: 6.0, tuition: 4500, grantCover: 4500, govGrant: true, schol: "Shanghai Government / CSC Grant", test: "Hujjatlar paketi + Suhbat", dl: [3, 30] },
+  { id: "sg-nus-cs", cc: "SG", city: "Singapur", uni: "National University of Singapore (NUS)", short: "NUS Singapore", prog: "Computer Science & Analytics", lvl: "B", field: "CS", gpa: 4.8, ielts: 7.0, tuition: 14500, grantCover: 14500, govGrant: true, schol: "ASEAN / MOE Tuition Grant", test: "SAT / Olimpiada natijalari", dl: [2, 25] },
+  { id: "gb-ucl-ir", cc: "GB", city: "London", uni: "University College London (UCL)", short: "UCL London", prog: "Public Policy & International Relations", lvl: "M", field: "IR", gpa: 4.7, ielts: 7.0, tuition: 26000, grantCover: 26000, govGrant: true, schol: "Chevening UK Government Scholarship (100%)", test: "2 yillik ish tajribasi (Chevening uchun)", dl: [11, 5] },
+  { id: "ee-tartu-cs", cc: "EE", city: "Tartu", uni: "University of Tartu", short: "Univ. of Tartu", prog: "Science & Technology / IT", lvl: "B", field: "CS", gpa: 4.2, ielts: 6.0, tuition: 4600, grantCover: 4600, govGrant: true, schol: "Estonian Government Tuition Waiver", test: "Motivatsion xat + Matematika", dl: [4, 15] },
+  { id: "kz-nu-cs", cc: "KZ", city: "Ostona", uni: "Nazarbayev University", short: "Nazarbayev Univ.", prog: "Computer Science & Engineering", lvl: "B", field: "CS", gpa: 4.3, ielts: 6.0, tuition: 0, grantCover: 0, govGrant: true, schol: "Abay Kunanbayev 100% Full Grant", test: "NUET / SAT 1250+", dl: [4, 10] },
+  { id: "ae-mbzuai-cs", cc: "AE", city: "Abu-Dabi", uni: "MBZUAI (AI University)", short: "MBZUAI UAE", prog: "Machine Learning & Artificial Intelligence", lvl: "M", field: "CS", gpa: 4.5, ielts: 6.5, tuition: 0, grantCover: 0, govGrant: true, schol: "100% To‘liq Grant + $2,100 oylik stipendiya", test: "AI/Matematika onlayn imtihoni", dl: [1, 15] },
+  { id: "my-um-med", cc: "MY", city: "Kuala-Lumpur", uni: "Universiti Malaya (UM)", short: "Univ. Malaya", prog: "Biomedical Science & Biotechnology", lvl: "B", field: "MED", gpa: 4.1, ielts: 6.0, tuition: 4200, grantCover: 4200, govGrant: true, schol: "MTCP / Malaysia International Scholarship", test: "Akademik transkript + Suhbat", dl: [5, 1] },
+  { id: "ca-ubc-eng", cc: "CA", city: "Vankuver", uni: "University of British Columbia (UBC)", short: "UBC Canada", prog: "Applied Science & Engineering", lvl: "B", field: "ENG", gpa: 4.6, ielts: 6.5, tuition: 29000, grantCover: 22000, govGrant: true, schol: "Karen McKellin International Leader Award", test: "Personal Profile + Yuqori GPA", dl: [1, 15] },
+  { id: "au-melb-biz", cc: "AU", city: "Melburn", uni: "The University of Melbourne", short: "UniMelb Australia", prog: "Commerce & Global Economics", lvl: "M", field: "BIZ", gpa: 4.5, ielts: 6.5, tuition: 27000, grantCover: 18000, govGrant: true, schol: "Melbourne Graduate / Australia Awards", test: "Akademik natijalar + Esse", dl: [4, 30] }
+];
+
+// ============================================================================
+// 2B. SCHOLARSHIPS & GRANTS CATALOG (INCLUDING TÜRKİYE BURSLARI & GLOBAL)
+// ============================================================================
+const SCHOLARSHIPS = [
+  {
+    id: "sch-turkiye-burslari",
+    cc: "TR",
+    region: "TR",
+    badge: "ENG MASHHUR • 100% FULL GRANT",
+    name: "Türkiye Bursları (Turkiya Hukumati Stipendiyasi)",
+    host: "Turkiya Respublikasi (YTB)",
+    levels: "Bakalavr, Magistratura, PhD",
+    deadline: "10-Yanvar – 20-Fevral",
+    coverage: "100% kontrakt bepul + oylik stipendiya + bepul yotoqxona + borish-kelish aviachipta + 1 yillik bepul Turk tili kursi + tibbiy sug‘urta.",
+    requirements: "GPA odatda 3.5/5.0+ (Bakalavr) / 3.75/5.0+ (Magistratura); IELTS/TOEFL majburiy emas (turkcha yoki inglizcha dasturlar tanlanadi); 2 ta Letter of Intent.",
+    prompt: "Türkiye Bursları haqida batafsil aytib ber (talablar, stipendiya, dedlayn)."
+  },
+  {
+    id: "sch-stipendium-hungaricum",
+    cc: "HU",
+    region: "EU",
+    badge: "YEVROPA DAVLAT GRANT",
+    name: "Stipendium Hungaricum (Vengriya)",
+    host: "Vengriya Hukumati & Tempus Public Foundation",
+    levels: "Bakalavr, Magistratura, One-tier Master",
+    deadline: "15-Yanvar",
+    coverage: "100% o‘qish to‘lovi bepul + oylik stipendiya + yotoqxona o‘rni (yoki turarjoy to‘lovi) + tibbiy sug‘urta.",
+    requirements: "Attestat/diplom, pasport, motivatsion xat, til sertifikati (ko‘p dasturlarda IELTS 5.5–6.0 yoki suhbat).",
+    prompt: "Germaniya yoki Vengriya grantlari haqida ayt."
+  },
+  {
+    id: "sch-daad",
+    cc: "DE",
+    region: "EU",
+    badge: "GERMANIYA AKADEMIK GRANT",
+    name: "DAAD Scholarships (Germaniya)",
+    host: "German Academic Exchange Service",
+    levels: "Magistratura & PhD (shuningdek davlat OTMlarda $0 kontrakt)",
+    deadline: "Mart – Oktyabr (dasturga qarab)",
+    coverage: "Oylik stipendiya (€934+ Magistratura), sayohat xarajatlari, tibbiy sug‘urta, Germaniyadagi davlat OTMlarda o‘qish bepul.",
+    requirements: "Yuqori GPA, IELTS 6.5 / TOEFL, 2 ta tavsiyanoma, aniq loyiha/motivatsiya rejasi.",
+    prompt: "Germaniya yoki Vengriya grantlari haqida ayt."
+  },
+  {
+    id: "sch-gks-korea",
+    cc: "KR",
+    region: "ASIA",
+    badge: "100% + OYLIK STIPENDIYA",
+    name: "GKS — Global Korea Scholarship (Janubiy Koreya)",
+    host: "NIIED (Koreya Ta’lim Vazirligi)",
+    levels: "Bakalavr (Associate/Bachelor) & Magistratura",
+    deadline: "Fevral – Mart",
+    coverage: "100% kontrakt + 1 yil bepul Koreys tili kursi + oylik stipendiya + aviachipta + joylashuv nafaqasi.",
+    requirements: "Yuqori akademik o‘zlashtirish, shaxsiy bayonot (Study Plan), tavsiyanomalar; Elchixona yoki Universitet treki.",
+    prompt: "GKS (Koreya), MEXT (Yaponiya) va Chevening grantlari qanday ishlaydi?"
+  },
+  {
+    id: "sch-mext-japan",
+    cc: "JP",
+    region: "ASIA",
+    badge: "YAPONIYA HUKUMAT GRANT",
+    name: "MEXT Government Scholarship (Yaponiya)",
+    host: "Yaponiya Ta’lim, Madaniyat, Sport, Fan va Texnologiya Vazirligi",
+    levels: "Bakalavr, Magistratura, Tadqiqotchi",
+    deadline: "Aprel – May",
+    coverage: "100% o‘qish to‘lovi + oylik stipendiya + borish-kelish aviachipta.",
+    requirements: "MEXT yozma imtihonlari, elchixona suhbati, yuqori baholar va motivatsiya.",
+    prompt: "GKS (Koreya), MEXT (Yaponiya) va Chevening grantlari qanday ishlaydi?"
+  },
+  {
+    id: "sch-chevening-uk",
+    cc: "GB",
+    region: "EU",
+    badge: "BUYUK BRITANIYA GRANT",
+    name: "Chevening Scholarships (Buyuk Britaniya)",
+    host: "UK Foreign, Commonwealth & Development Office",
+    levels: "1 yillik Magistratura (Master's)",
+    deadline: "Noyabr boshi",
+    coverage: "100% universitet to‘lovi + oylik yashash stipendiyasi + aviachipta + viza xarajatlari.",
+    requirements: "Kamida 2 yillik (2,800 soat) ish tajribasi, yetakchilik salohiyati va UK universitetlaridan offer.",
+    prompt: "GKS (Koreya), MEXT (Yaponiya) va Chevening grantlari qanday ishlaydi?"
+  },
+  {
+    id: "sch-eiffel-france",
+    cc: "FR",
+    region: "EU",
+    badge: "FRANSIYA TASHQI ISHLAR GRANT",
+    name: "France Excellence Eiffel Scholarship",
+    host: "Fransiya Yevropa va Tashqi Ishlar Vazirligi",
+    levels: "Magistratura & PhD",
+    deadline: "Yanvar",
+    coverage: "Oylik stipendiya (€1,181 Magistratura) + aviachipta + madaniy va turarjoy yordami.",
+    requirements: "Universitet tomonidan nomzodlik ko‘rsatilishi, kuchli akademik profil va aniq kasbiy reja.",
+    prompt: "Mening profilim uchun eng yaxshi 5 ta universitet portfelini tuzib ber."
+  },
+  {
+    id: "sch-csc-china",
+    cc: "CN",
+    region: "ASIA",
+    badge: "XITOY HUKUMAT GRANT",
+    name: "CSC — Chinese Government Scholarship",
+    host: "China Scholarship Council",
+    levels: "Bakalavr, Magistratura, PhD",
+    deadline: "Yanvar – Mart",
+    coverage: "100% kontrakt + bepul yotoqxona + oylik stipendiya + tibbiy sug‘urta.",
+    requirements: "Pasport, diplom/attestat, o‘qish rejasi (Study Plan), 2 ta tavsiyanoma.",
+    prompt: "Qaysi universitetga kirishim osonroq?"
+  },
+  {
+    id: "sch-nawa-poland",
+    cc: "PL",
+    region: "EU",
+    badge: "POLSHA MILLIY GRANT",
+    name: "NAWA Banach / Ignacy Łukasiewicz Scholarship",
+    host: "Polish National Agency for Academic Exchange",
+    levels: "Magistratura (Muhandislik, IT, Tabiiy fanlar)",
+    deadline: "Mart – Aprel",
+    coverage: "Polsha davlat OTMlarida 100% kontrakt ozodligi + oylik stipendiya.",
+    requirements: "Bakalavr diplomi, ingliz yoki polyak tilini bilish, rivojlanayotgan davlatlar fuqaroligi.",
+    prompt: "IELTS 6.5 bilan qayerga topshirsam bo‘ladi?"
+  },
+  {
+    id: "sch-finland-sch",
+    cc: "FI",
+    region: "EU",
+    badge: "FINLYANDIYA GRANT + STIPENDIYA",
+    name: "Finland Government Scholarship",
+    host: "Finlyandiya Universitetlari",
+    levels: "Bakalavr & Magistratura",
+    deadline: "Yanvar",
+    coverage: "100% o‘qish to‘lovi granti + kamida €5,000 ko‘chirish/yashash stipendiyasi.",
+    requirements: "Yuqori kirish ballari/GPA, IELTS/TOEFL yoki SAT.",
+    prompt: "IELTS 6.5 bilan qayerga topshirsam bo‘ladi?"
+  },
+  {
+    id: "sch-si-sweden",
+    cc: "SE",
+    region: "EU",
+    badge: "SHVETSIYA GLOBAL GRANT",
+    name: "SI Global Professionals Scholarship (Shvetsiya)",
+    host: "Swedish Institute",
+    levels: "Magistratura",
+    deadline: "Fevral",
+    coverage: "100% kontrakt + oylik stipendiya + sayohat granti + SI Alumni tarmog‘i.",
+    requirements: "Yetakchilik tajribasi, CV va motivatsiya.",
+    prompt: "Motivation letter yozishda nimaga e’tibor berish kerak?"
+  },
+  { id: "sch-mbzuai-uae", cc: "AE", region: "ASIA", badge: "100% GRANT + $2,100/OY", name: "MBZUAI Full Fellowship (BAA)", host: "Mohamed bin Zayed University of Artificial Intelligence", levels: "Magistratura & PhD (AI / ML / CV / NLP)", deadline: "15-Yanvar", coverage: "100% o‘qish to‘lovi + ~$2,100 oylik stipendiya + yotoqxona + sug‘urta.", requirements: "Kuchli matematika/AI bazasi, IELTS 6.5 / TOEFL, onlayn imtihon va suhbat.", prompt: "Qaysi universitetga kirishim osonroq?" }
+];
+
+// ============================================================================
+// 3. VISUAL CAMPUS BANNER SVG & UNIVERSITY METADATA HELPERS
+// ============================================================================
+const COUNTRY_VISUAL_THEMES = {
+  DE: { g1: "#0f172a", g2: "#1d4ed8", accent: "#38bdf8", motif: "europe" },
+  HU: { g1: "#134e4a", g2: "#0d9488", accent: "#5eead4", motif: "danube" },
+  KR: { g1: "#1e1b4b", g2: "#4338ca", accent: "#818cf8", motif: "asia" },
+  TR: { g1: "#7f1d1d", g2: "#dc2626", accent: "#fca5a5", motif: "classic" },
+  PL: { g1: "#312e81", g2: "#2563eb", accent: "#93c5fd", motif: "europe" },
+  CZ: { g1: "#1e3a8a", g2: "#0284c7", accent: "#7dd3fc", motif: "europe" },
+  IT: { g1: "#064e3b", g2: "#059669", accent: "#6ee7b7", motif: "classic" },
+  FR: { g1: "#172554", g2: "#3b82f6", accent: "#93c5fd", motif: "classic" },
+  NL: { g1: "#7c2d12", g2: "#ea580c", accent: "#fdba74", motif: "europe" },
+  CH: { g1: "#881337", g2: "#e11d48", accent: "#fda4af", motif: "europe" },
+  AT: { g1: "#4c1d95", g2: "#7c3aed", accent: "#c4b5fd", motif: "classic" },
+  SE: { g1: "#0c4a6e", g2: "#0284c7", accent: "#38bdf8", motif: "europe" },
+  FI: { g1: "#1e3a8a", g2: "#1d4ed8", accent: "#60a5fa", motif: "europe" },
+  NO: { g1: "#0f172a", g2: "#0369a1", accent: "#7dd3fc", motif: "europe" },
+  JP: { g1: "#3b0764", g2: "#9333ea", accent: "#e879f9", motif: "asia" },
+  CN: { g1: "#7f1d1d", g2: "#b91c1c", accent: "#fde047", motif: "asia" },
+  SG: { g1: "#064e3b", g2: "#0d9488", accent: "#34d399", motif: "modern" },
+  MY: { g1: "#1e1b4b", g2: "#0284c7", accent: "#38bdf8", motif: "modern" },
+  GB: { g1: "#1e293b", g2: "#334155", accent: "#38bdf8", motif: "classic" },
+  EE: { g1: "#0f172a", g2: "#0ea5e9", accent: "#7dd3fc", motif: "europe" },
+  KZ: { g1: "#065f46", g2: "#0284c7", accent: "#fde047", motif: "modern" },
+  AE: { g1: "#78350f", g2: "#d97706", accent: "#fde68a", motif: "modern" },
+  ES: { g1: "#7f1d1d", g2: "#ea580c", accent: "#fde047", motif: "classic" },
+  CA: { g1: "#7f1d1d", g2: "#dc2626", accent: "#fecaca", motif: "modern" },
+  AU: { g1: "#0f172a", g2: "#0284c7", accent: "#38bdf8", motif: "modern" }
+};
+
+function getUniversityMeta(p) {
+  let hash = 0;
+  for (let i = 0; i < p.id.length; i++) {
+    hash += p.id.charCodeAt(i);
+  }
+  const founded = (p.cc === "KZ" || p.cc === "AE")
+    ? 1995 + (hash % 18)
+    : (hash % 2 === 0 ? 1810 + (hash % 140) : 1450 + (hash % 320));
+  const qsRank = p.tier === "Reach"
+    ? "#" + (15 + (hash % 75)) + " QS World"
+    : (p.tier === "Match" ? "#" + (95 + (hash % 180)) + " QS World" : "#" + (280 + (hash % 240)) + " QS World");
+  const students = (14 + (hash % 34)) + ",000+";
+  const acceptance = p.tier === "Reach"
+    ? (12 + (hash % 10)) + "%"
+    : (p.tier === "Match" ? (24 + (hash % 15)) + "%" : (42 + (hash % 22)) + "%");
+  const livingCost = ["CH", "SG", "GB", "NO", "SE", "CA", "AU"].includes(p.cc)
+    ? "$11,500 – $14,500 / yil"
+    : (["DE", "NL", "FR", "AT", "FI", "JP", "KR", "ES"].includes(p.cc) ? "$8,000 – $10,800 / yil" : "$3,800 – $6,500 / yil");
+  const initials = p.short.replace(/[^A-Z0-9]/g, "").slice(0, 4) || "UNI";
+  return { founded, qsRank, students, acceptance, livingCost, initials };
+}
+
+function buildCampusBannerSVG(p, isLarge) {
+  const theme = COUNTRY_VISUAL_THEMES[p.cc] || COUNTRY_VISUAL_THEMES.DE;
+  const meta = getUniversityMeta(p);
+  const countryLabel = COUNTRY_NAMES[p.cc] || "🌍";
+  const flag = countryLabel.split(" ")[0];
+  const uid = "grad-" + p.id + "-" + (isLarge ? "lg" : "sm");
+  const heightClass = isLarge ? "h-48 sm:h-56" : "h-32";
+
+  let skylinePaths = "";
+  if (theme.motif === "asia") {
+    skylinePaths = '<path d="M0,130 L40,130 L45,95 L35,95 L55,75 L75,95 L65,95 L70,130 L120,130 L120,60 L145,45 L170,60 L170,130 L230,130 L240,85 L225,85 L250,62 L275,85 L260,85 L270,130 L400,130 L400,160 L0,160 Z" fill="rgba(255,255,255,0.12)"/><circle cx="320" cy="42" r="22" fill="' + theme.accent + '" opacity="0.22"/>';
+  } else if (theme.motif === "classic" || theme.motif === "danube") {
+    skylinePaths = '<path d="M0,135 L55,135 L55,95 L75,95 L75,78 C75,58 115,58 115,78 L115,95 L135,95 L135,135 L195,135 L195,88 L210,72 L225,88 L225,135 L280,135 L280,68 L295,48 L310,68 L310,135 L400,135 L400,160 L0,160 Z" fill="rgba(255,255,255,0.12)"/><rect x="70" y="98" width="6" height="32" fill="rgba(255,255,255,0.18)"/><rect x="86" y="98" width="6" height="32" fill="rgba(255,255,255,0.18)"/><rect x="102" y="98" width="6" height="32" fill="rgba(255,255,255,0.18)"/>';
+  } else if (theme.motif === "modern") {
+    skylinePaths = '<path d="M0,135 L45,135 L45,75 L75,65 L75,135 L115,135 L115,42 L135,24 L155,42 L155,135 L195,135 L195,55 L230,55 L230,135 L275,135 L275,36 L292,18 L309,36 L309,135 L400,135 L400,160 L0,160 Z" fill="rgba(255,255,255,0.12)"/><circle cx="345" cy="44" r="18" fill="' + theme.accent + '" opacity="0.25"/>';
+  } else {
+    skylinePaths = '<path d="M0,135 L50,135 L50,82 L85,62 L120,82 L120,135 L165,135 L165,70 L182,42 L199,70 L199,135 L245,135 L245,88 L305,88 L305,135 L400,135 L400,160 L0,160 Z" fill="rgba(255,255,255,0.12)"/><circle cx="85" cy="86" r="8" fill="' + theme.accent + '" opacity="0.45"/>';
+  }
+
+  const detailPill = isLarge ? "" : '<span class="px-2.5 py-1 rounded-lg bg-white/20 group-hover:bg-white group-hover:text-slate-900 backdrop-blur-md text-white text-[11px] font-semibold transition">🖼️ Batafsil</span>';
+
+  return (
+    '<div onclick="openUniDetailModal(\'' + p.id + '\')" class="relative w-full ' + heightClass + ' overflow-hidden cursor-pointer select-none group">' +
+      '<svg viewBox="0 0 400 150" preserveAspectRatio="none" class="w-full h-full block transition-transform duration-500 group-hover:scale-105">' +
+        '<defs><linearGradient id="' + uid + '" x1="0%" y1="0%" x2="100%" y2="100%">' +
+          '<stop offset="0%" stop-color="' + theme.g1 + '"/>' +
+          '<stop offset="100%" stop-color="' + theme.g2 + '"/>' +
+        '</linearGradient></defs>' +
+        '<rect width="400" height="150" fill="url(#' + uid + ')"/>' +
+        '<circle cx="360" cy="25" r="70" fill="' + theme.accent + '" opacity="0.14"/>' +
+        '<circle cx="40" cy="140" r="65" fill="#ffffff" opacity="0.06"/>' +
+        skylinePaths +
+      '</svg>' +
+      '<div class="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">' +
+        '<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/45 backdrop-blur-md text-white text-[11px] font-semibold border border-white/15">' +
+          '<span>' + flag + '</span><span>' + p.city + '</span>' +
+        '</span>' +
+        '<span class="px-2.5 py-1 rounded-lg bg-white/15 backdrop-blur-md text-white text-[10px] font-mono font-bold border border-white/20">' +
+          meta.qsRank +
+        '</span>' +
+      '</div>' +
+      '<div class="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2">' +
+        '<div class="flex items-center gap-2.5">' +
+          '<div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/95 text-slate-900 font-extrabold text-xs sm:text-sm flex items-center justify-center shadow-lg border-2 border-white/60 tracking-tight">' +
+            meta.initials +
+          '</div>' +
+          '<div class="text-white drop-shadow">' +
+            '<div class="text-[10px] uppercase tracking-wider text-white/80 font-mono">Est. ' + meta.founded + ' • Davlat OTM</div>' +
+            '<div class="text-xs sm:text-sm font-bold leading-tight">' + p.short + '</div>' +
+          '</div>' +
+        '</div>' +
+        detailPill +
+      '</div>' +
+    '</div>'
+  );
+}
+
+// ============================================================================
+// 4. FIT SCORE & PROGRAM EVALUATION ENGINE
+// ============================================================================
+function evaluateProgram(p, prof) {
+  const simGrantEl = document.getElementById("sim-grant-win");
+  const simGrant = simGrantEl ? simGrantEl.checked : true;
+  const netCost = simGrant ? Math.max(0, p.tuition - p.grantCover) : p.tuition;
+
+  let score = 50;
+  const gpaDiff = prof.gpa - p.gpa;
+  score += Math.max(-20, Math.min(22, Math.round(gpaDiff * 28)));
+
+  const ieltsDiff = prof.ielts - p.ielts;
+  score += Math.max(-18, Math.min(18, Math.round(ieltsDiff * 14)));
+
+  if (prof.budget >= netCost) {
+    score += 12;
+  } else {
+    const gap = netCost - prof.budget;
+    score -= Math.min(20, Math.round(gap / 800));
+  }
+
+  if (p.govGrant) score += 5;
+  score = Math.max(25, Math.min(99, score));
+
+  let tier = "Match";
+  if (score >= 82 && gpaDiff >= 0.1 && ieltsDiff >= 0) {
+    tier = "Safety";
+  } else if (score < 66 || gpaDiff < -0.15) {
+    tier = "Reach";
+  }
+
+  return Object.assign({}, p, { score: score, tier: tier, netCost: netCost });
+}
+
+// ============================================================================
+// 5. REGISTRATION & ONBOARDING MANAGEMENT
+// ============================================================================
+function loadUserRegistration() {
+  try {
+    const raw = localStorage.getItem("unipath-user-reg");
+    if (!raw) return false;
+    const parsed = JSON.parse(raw);
+    if (parsed && parsed.firstName && parsed.lastName && parsed.institution && parsed.age) {
+      state.userReg = parsed;
+      updateUserNavUI();
+      return true;
+    }
+  } catch (e) {}
+  return false;
+}
+
+function updateUserNavUI() {
+  const pill = document.getElementById("user-nav-pill");
+  const nameEl = document.getElementById("user-nav-name");
+  const topLoginBtn = document.getElementById("login-top-btn");
+  if (!pill || !nameEl) return;
+  if (state.userReg) {
+    pill.classList.remove("hidden");
+    pill.classList.add("flex");
+    if (topLoginBtn) topLoginBtn.classList.add("hidden");
+    nameEl.textContent = state.userReg.firstName + " " + state.userReg.lastName + " • " + state.userReg.age + " yosh • " + state.userReg.institution;
+  } else {
+    pill.classList.add("hidden");
+    pill.classList.remove("flex");
+    if (topLoginBtn) topLoginBtn.classList.remove("hidden");
+  }
+}
+
+function openOnboardingModal(prefill) {
+  const modal = document.getElementById("onboarding-modal");
+  const closeBtn = document.getElementById("close-onboarding-btn");
+  if (closeBtn) {
+    if (state.userReg) {
+      closeBtn.classList.remove("hidden");
+      closeBtn.classList.add("flex");
+    } else {
+      closeBtn.classList.add("hidden");
+      closeBtn.classList.remove("flex");
+    }
+  }
+  if (prefill && state.userReg) {
+    document.getElementById("reg-firstname").value = state.userReg.firstName;
+    document.getElementById("reg-lastname").value = state.userReg.lastName;
+    document.getElementById("reg-institution").value = state.userReg.institution;
+    document.getElementById("reg-age").value = state.userReg.age;
+  }
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeOnboardingModal() {
+  const modal = document.getElementById("onboarding-modal");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+}
+
+function applyPersonaPreset(type) {
+  if (type === "abituriyent") {
+    document.getElementById("reg-firstname").value = "Jasurbek";
+    document.getElementById("reg-lastname").value = "Toshmatov";
+    document.getElementById("reg-institution").value = "Samarqand Akademik Litseyi";
+    document.getElementById("reg-age").value = "17";
+    document.getElementById("prof-level").value = "B";
+    document.getElementById("prof-gpa").value = "4.6";
+    document.getElementById("prof-ielts").value = "6.5";
+    updateProfileAndRender();
+    showToast("Bakalavr abituriyenti namunasi qo‘llandi", "info");
+  } else if (type === "magistr") {
+    document.getElementById("reg-firstname").value = "Madina";
+    document.getElementById("reg-lastname").value = "Rustamova";
+    document.getElementById("reg-institution").value = "Toshkent Davlat Iqtisodiyot Universiteti";
+    document.getElementById("reg-age").value = "21";
+    document.getElementById("prof-level").value = "M";
+    document.getElementById("prof-gpa").value = "4.7";
+    document.getElementById("prof-ielts").value = "7.0";
+    updateProfileAndRender();
+    showToast("Magistratura nomzodi namunasi qo‘llandi", "info");
+  } else if (type === "turkiya") {
+    document.getElementById("reg-firstname").value = "Bobur";
+    document.getElementById("reg-lastname").value = "Qodirov";
+    document.getElementById("reg-institution").value = "Farg‘ona Viloyati Ixtisoslashtirilgan Maktabi";
+    document.getElementById("reg-age").value = "18";
+    document.getElementById("prof-level").value = "B";
+    document.getElementById("prof-gpa").value = "4.5";
+    document.getElementById("prof-ielts").value = "6.0";
+    document.getElementById("filter-country").value = "TR";
+    updateProfileAndRender();
+    showToast("Türkiye Burslari yo‘nalishi tanlandi", "info");
+  }
+}
+
+function handleRegistrationSubmit(e) {
+  e.preventDefault();
+  const firstName = document.getElementById("reg-firstname").value.trim();
+  const lastName = document.getElementById("reg-lastname").value.trim();
+  const institution = document.getElementById("reg-institution").value.trim();
+  const age = parseInt(document.getElementById("reg-age").value, 10) || 18;
+
+  if (!firstName || !lastName || !institution) return;
+
+  state.userReg = { firstName: firstName, lastName: lastName, institution: institution, age: age };
+  localStorage.setItem("unipath-user-reg", JSON.stringify(state.userReg));
+  updateUserNavUI();
+  closeOnboardingModal();
+  clearAiChat();
+  showToast("Xush kelibsiz, " + firstName + "!", "success");
+}
+
+function fillDemoRegistration() {
+  document.getElementById("reg-firstname").value = "Azizbek";
+  document.getElementById("reg-lastname").value = "Karimov";
+  document.getElementById("reg-institution").value = "Toshkent Axborot Texnologiyalari Litseyi";
+  document.getElementById("reg-age").value = 18;
+  state.userReg = {
+    firstName: "Azizbek",
+    lastName: "Karimov",
+    institution: "Toshkent Axborot Texnologiyalari Litseyi",
+    age: 18
+  };
+  localStorage.setItem("unipath-user-reg", JSON.stringify(state.userReg));
+  updateUserNavUI();
+  closeOnboardingModal();
+  clearAiChat();
+  showToast("Demo profil faollashtirildi!", "info");
+}
+
+function logoutUserRegistration() {
+  localStorage.removeItem("unipath-user-reg");
+  state.userReg = null;
+  updateUserNavUI();
+  openOnboardingModal(false);
+}
+
+// ============================================================================
+// 6. RENDERING PROGRAMS, SCHOLARSHIPS, ROADMAP & POPULATING DROPDOWNS
+// ============================================================================
+function updateProfileAndRender() {
+  state.profile.lvl = document.getElementById("prof-level").value;
+  state.profile.field = document.getElementById("prof-field").value;
+  state.profile.gpa = parseFloat(document.getElementById("prof-gpa").value);
+  state.profile.ielts = parseFloat(document.getElementById("prof-ielts").value);
+  state.profile.budget = parseInt(document.getElementById("prof-budget").value, 10);
+
+  document.getElementById("val-gpa").textContent = state.profile.gpa.toFixed(1);
+  document.getElementById("val-ielts").textContent = state.profile.ielts.toFixed(1);
+  document.getElementById("val-budget").textContent = "$" + state.profile.budget.toLocaleString();
+
+  renderPrograms();
+}
+
+function getFilteredPrograms() {
+  const searchEl = document.getElementById("filter-search");
+  const countryEl = document.getElementById("filter-country");
+  const tierEl = document.getElementById("filter-tier");
+  const grantOnlyEl = document.getElementById("filter-grant-only");
+
+  const search = searchEl ? searchEl.value.toLowerCase().trim() : "";
+  const country = countryEl ? countryEl.value : "ALL";
+  const tier = tierEl ? tierEl.value : "ALL";
+  const grantOnly = grantOnlyEl ? grantOnlyEl.checked : false;
+
+  return PROGRAMS
+    .filter(function(p) {
+      if (p.lvl !== state.profile.lvl) return false;
+      if (state.profile.field !== "ALL" && p.field !== state.profile.field) return false;
+      if (country !== "ALL" && p.cc !== country) return false;
+      if (grantOnly && !p.govGrant) return false;
+      if (search) {
+        const hay = (p.uni + " " + p.prog + " " + p.city + " " + p.schol + " " + (COUNTRY_NAMES[p.cc] || "")).toLowerCase();
+        if (!hay.includes(search)) return false;
+      }
+      return true;
+    })
+    .map(function(p) { return evaluateProgram(p, state.profile); })
+    .filter(function(p) { return tier === "ALL" || p.tier === tier; })
+    .sort(function(a, b) { return b.score - a.score; });
+}
+
+function renderPrograms() {
+  const list = getFilteredPrograms();
+  const grid = document.getElementById("programs-grid");
+
+  document.getElementById("matched-count-badge").textContent = list.length + " dastur topildi";
+  document.getElementById("tab-match-count").textContent = list.length;
+  document.getElementById("tab-shortlist-count").textContent = state.shortlist.length;
+  document.getElementById("tab-schol-count").textContent = SCHOLARSHIPS.length;
+
+  if (!list.length) {
+    grid.innerHTML = '<div class="col-span-full card-surface rounded-3xl p-10 text-center space-y-2"><div class="text-3xl">🔍</div><h3 class="font-bold text-base">Mos dasturlar topilmadi</h3><p class="text-xs text-[var(--muted)]">Ta’lim bosqichi (Bakalavr/Magistratura), davlat yoki yo‘nalish filtrini o‘zgartirib ko‘ring.</p></div>';
+    return;
+  }
+
+  grid.innerHTML = list.map(function(p) {
+    const isShortlisted = state.shortlist.includes(p.id);
+    const tierClass = p.tier === "Safety"
+      ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-300"
+      : (p.tier === "Match" ? "bg-sky-500/15 text-sky-600 dark:text-sky-300" : "bg-amber-500/15 text-amber-600 dark:text-amber-300");
+
+    const costText = p.netCost === 0 ? "$0 (Grant)" : "$" + p.netCost.toLocaleString();
+    const costColor = p.netCost === 0 ? "text-brand-green" : "";
+    const grantBadge = p.govGrant ? '<span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-300">🏅 Grant</span>' : "";
+    const shortlistBtnClass = isShortlisted ? "bg-brand-green text-white" : "card-surface-2 hover:border-brand-blue";
+    const shortlistBtnLabel = isShortlisted ? "✓ Shortlistda" : "+ Shortlist";
+    const cardRing = isShortlisted ? "ring-2 ring-brand-blue" : "";
+
+    return (
+      '<div class="card-surface rounded-2xl overflow-hidden flex flex-col justify-between transition-all hover:shadow-xl hover:-translate-y-0.5 ' + cardRing + '">' +
+        '<div>' +
+          buildCampusBannerSVG(p, false) +
+          '<div class="p-5">' +
+            '<div class="flex items-center justify-between gap-2 mb-3">' +
+              '<div class="flex flex-wrap items-center gap-1.5">' +
+                '<span class="px-2.5 py-1 rounded-lg text-xs font-bold ' + tierClass + '">' + p.tier + '</span>' +
+                '<span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-brand-blue/10 text-brand-blue dark:text-brand-cyan">🏛️ Davlat OTM</span>' +
+                grantBadge +
+              '</div>' +
+              '<div class="text-right shrink-0">' +
+                '<div class="text-lg font-extrabold font-mono text-brand-blue dark:text-brand-cyan leading-none">' + p.score + '%</div>' +
+                '<div class="text-[10px] text-[var(--muted)] uppercase font-semibold">Fit Score</div>' +
+              '</div>' +
+            '</div>' +
+            '<h3 onclick="openUniDetailModal(\'' + p.id + '\')" class="font-bold text-base sm:text-lg leading-snug mb-1 cursor-pointer hover:text-brand-blue dark:hover:text-brand-cyan transition">' + p.uni + '</h3>' +
+            '<div class="text-sm font-semibold text-brand-blue dark:text-brand-cyan mb-2">' + p.prog + '</div>' +
+            '<div class="text-xs text-[var(--muted)] mb-3">' + (COUNTRY_NAMES[p.cc] || p.cc) + ' • ' + p.city + ' • ' + (p.lvl === "B" ? "Bakalavr" : "Magistratura") + '</div>' +
+            '<div class="grid grid-cols-3 gap-2 p-3 rounded-xl card-surface-2 text-center mb-3">' +
+              '<div>' +
+                '<div class="text-[10px] text-[var(--muted)] uppercase">Sof Xarajat</div>' +
+                '<div class="font-mono font-bold text-xs sm:text-sm ' + costColor + '">' + costText + '</div>' +
+              '</div>' +
+              '<div class="border-x border-[var(--border)]">' +
+                '<div class="text-[10px] text-[var(--muted)] uppercase">Min GPA / IELTS</div>' +
+                '<div class="font-mono font-bold text-xs sm:text-sm">' + p.gpa + ' / ' + p.ielts + '</div>' +
+              '</div>' +
+              '<div>' +
+                '<div class="text-[10px] text-[var(--muted)] uppercase">Dedlayn</div>' +
+                '<div class="font-mono font-bold text-xs sm:text-sm">' + p.dl[1] + '-' + MONTH_NAMES_UZ[p.dl[0] - 1].slice(0, 3) + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="space-y-1 text-xs text-[var(--ink-2)] mb-4">' +
+              '<div><span class="font-semibold text-[var(--ink)]">Grant:</span> ' + p.schol + '</div>' +
+              '<div><span class="font-semibold text-[var(--ink)]">Qo‘shimcha:</span> ' + p.test + '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="px-5 pb-5 pt-3 border-t border-[var(--border)] flex flex-col gap-2">' +
+          '<div class="grid grid-cols-2 gap-2">' +
+            '<button onclick="openUniDetailModal(\'' + p.id + '\')" class="py-2.5 px-3 rounded-xl text-xs font-bold bg-brand-blue/10 text-brand-blue dark:text-brand-cyan hover:bg-brand-blue hover:text-white transition flex items-center justify-center gap-1.5">' +
+              '<span>🖼️ Batafsil ma’lumot</span>' +
+            '</button>' +
+            '<button onclick="toggleShortlist(\'' + p.id + '\')" class="py-2.5 px-3 rounded-xl text-xs font-bold transition ' + shortlistBtnClass + '">' +
+              shortlistBtnLabel +
+            '</button>' +
+          '</div>' +
+          '<button onclick="openAiStrategyModal(\'' + p.id + '\')" class="w-full py-2.5 px-3 rounded-xl text-xs font-bold bg-gradient-to-r from-brand-blue to-brand-cyan text-white hover:opacity-95 shadow-sm transition flex items-center justify-center gap-1">' +
+            '<span>✨ AI Strategiya Tahlili</span>' +
+          '</button>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join("");
+}
+
+function filterScholarships(region) {
+  state.scholarshipFilter = region;
+  ["ALL", "TR", "EU", "ASIA"].forEach(function(r) {
+    const btn = document.getElementById("sch-filter-" + r);
+    if (!btn) return;
+    if (r === region) {
+      btn.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-blue text-white transition";
+    } else {
+      btn.className = "px-3.5 py-2 rounded-xl text-xs font-bold card-surface-2 hover:border-brand-blue transition";
+    }
+  });
+  renderScholarships();
+}
+
+function renderScholarships() {
+  const grid = document.getElementById("scholarships-grid");
+  if (!grid) return;
+
+  const filtered = SCHOLARSHIPS.filter(function(s) {
+    if (state.scholarshipFilter === "ALL") return true;
+    return s.region === state.scholarshipFilter;
+  });
+
+  grid.innerHTML = filtered.map(function(s) {
+    const countryLabel = COUNTRY_NAMES[s.cc] || s.cc;
+    const isTurkiye = s.cc === "TR";
+    const accentBorder = isTurkiye ? "ring-2 ring-red-500/35" : "";
+    return (
+      '<div class="card-surface rounded-3xl p-5 flex flex-col justify-between gap-4 transition-all hover:shadow-xl ' + accentBorder + '">' +
+        '<div class="space-y-3">' +
+          '<div class="flex items-center justify-between gap-2">' +
+            '<span class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">' + s.badge + '</span>' +
+            '<span class="text-xs font-semibold text-[var(--muted)]">' + countryLabel + '</span>' +
+          '</div>' +
+          '<div>' +
+            '<h4 class="font-extrabold text-base sm:text-lg leading-snug">' + s.name + '</h4>' +
+            '<div class="text-xs text-brand-blue dark:text-brand-cyan font-semibold mt-0.5">' + s.host + '</div>' +
+          '</div>' +
+          '<div class="grid grid-cols-2 gap-2 p-3 rounded-2xl card-surface-2 text-xs">' +
+            '<div><div class="text-[10px] text-[var(--muted)] uppercase">Bosqichlar</div><div class="font-bold mt-0.5">' + s.levels + '</div></div>' +
+            '<div><div class="text-[10px] text-[var(--muted)] uppercase">Dedlayn</div><div class="font-mono font-bold text-brand-blue dark:text-brand-cyan mt-0.5">' + s.deadline + '</div></div>' +
+          '</div>' +
+          '<div class="space-y-2 text-xs text-[var(--ink-2)] leading-relaxed">' +
+            '<div><strong class="text-[var(--ink)]">Nimalarni qoplaydi:</strong> ' + s.coverage + '</div>' +
+            '<div><strong class="text-[var(--ink)]">Asosiy talablar:</strong> ' + s.requirements + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="pt-3 border-t border-[var(--border)] flex items-center gap-2">' +
+          '<button onclick="askAiAboutScholarship(\'' + s.id + '\')" class="w-full py-2.5 px-3 rounded-xl text-xs font-bold bg-gradient-to-r from-brand-blue to-brand-cyan text-white hover:opacity-95 transition">🤖 AI Chatbotda batafsil so‘rash</button>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join("");
+}
+
+function askAiAboutScholarship(schId) {
+  const s = SCHOLARSHIPS.find(function(item) { return item.id === schId; });
+  switchWorkspaceTab("ai-chat");
+  document.getElementById("workspace").scrollIntoView({ behavior: "smooth" });
+  const promptText = s ? s.prompt : "Grant dasturlari haqida ma’lumot ber.";
+  sendQuickPrompt(promptText);
+}
+
+function toggleShortlist(id) {
+  const idx = state.shortlist.indexOf(id);
+  if (idx >= 0) {
+    state.shortlist.splice(idx, 1);
+    showToast("Shortlistdan olib tashlandi", "info");
+  } else {
+    state.shortlist.push(id);
+    showToast("Shortlistga qo‘shildi!", "success");
+  }
+  renderPrograms();
+  renderRoadmap();
+}
+
+function renderRoadmap() {
+  const container = document.getElementById("roadmap-container");
+  const selected = PROGRAMS.filter(function(p) { return state.shortlist.includes(p.id); });
+
+  if (!selected.length) {
+    container.innerHTML = '<div class="card-surface rounded-3xl p-8 text-center text-sm text-[var(--muted)]">Hozircha shortlistda universitet yo‘q. «Mos Dasturlar» bo‘limidan o‘zingizga yoqqan OTMlarni qo‘shing.</div>';
+    return;
+  }
+
+  container.innerHTML = selected.map(function(p) {
+    const tasks = [
+      { key: p.id + "-t1", label: "Pasport, attestat/diplom va baholar tabelini notarial tarjima qilish" },
+      { key: p.id + "-t2", label: "IELTS (" + p.ielts + "+) va qo‘shimcha talab (" + p.test + ") hujjatlarini tayyorlash" },
+      { key: p.id + "-t3", label: p.short + " uchun Motivation Letter va 2 ta tavsiyanoma yozish" },
+      { key: p.id + "-t4", label: "Onlayn portal orqali hujjat topshirish (Dedlayn: " + p.dl[1] + "-" + MONTH_NAMES_UZ[p.dl[0] - 1] + ")" }
+    ];
+
+    const tasksHtml = tasks.map(function(t) {
+      const checked = state.completedTasks[t.key] ? "checked" : "";
+      const lineStyle = state.completedTasks[t.key] ? "line-through opacity-60" : "";
+      return (
+        '<label class="flex items-start gap-2.5 p-2.5 rounded-xl card-surface-2 cursor-pointer text-xs sm:text-sm">' +
+          '<input type="checkbox" ' + checked + ' onchange="toggleTask(\'' + t.key + '\')" class="mt-0.5 accent-brand-green">' +
+          '<span class="' + lineStyle + '">' + t.label + '</span>' +
+        '</label>'
+      );
+    }).join("");
+
+    return (
+      '<div class="card-surface rounded-3xl p-5 space-y-3">' +
+        '<div class="flex flex-wrap items-center justify-between gap-2">' +
+          '<div>' +
+            '<span class="text-xs font-mono text-brand-blue dark:text-brand-cyan font-bold">' + (COUNTRY_NAMES[p.cc] || p.cc) + ' • Dedlayn: ' + p.dl[1] + '-' + MONTH_NAMES_UZ[p.dl[0] - 1] + '</span>' +
+            '<h4 class="font-extrabold text-base">' + p.uni + ' — ' + p.prog + '</h4>' +
+          '</div>' +
+          '<button onclick="toggleShortlist(\'' + p.id + '\')" class="px-3 py-1.5 rounded-xl card-surface-2 text-xs font-semibold hover:text-red-500 transition">O‘chirish</button>' +
+        '</div>' +
+        '<div class="grid sm:grid-cols-2 gap-2.5">' + tasksHtml + '</div>' +
+      '</div>'
+    );
+  }).join("");
+}
+
+function toggleTask(key) {
+  state.completedTasks[key] = !state.completedTasks[key];
+  renderRoadmap();
+}
+
+function exportIcsCalendar() {
+  const selected = PROGRAMS.filter(function(p) { return state.shortlist.includes(p.id); });
+  if (!selected.length) {
+    showToast("Avval shortlistga universitet qo‘shing!", "info");
+    return;
+  }
+  const year = new Date().getFullYear() + 1;
+  let ics = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//UniPath AI Pro//UZ\r\n";
+  selected.forEach(function(p) {
+    const mm = String(p.dl[0]).padStart(2, "0");
+    const dd = String(p.dl[1]).padStart(2, "0");
+    ics += "BEGIN:VEVENT\r\n";
+    ics += "UID:" + p.id + "@unipath.ai\r\n";
+    ics += "DTSTART;VALUE=DATE:" + year + mm + dd + "\r\n";
+    ics += "SUMMARY:Dedlayn: " + p.short + " (" + p.prog + ")\r\n";
+    ics += "DESCRIPTION:Grant: " + p.schol + "\r\n";
+    ics += "END:VEVENT\r\n";
+  });
+  ics += "END:VCALENDAR";
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "unipath_deadlines.ics";
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast("Taqvim (.ICS) fayli yuklab olindi!", "success");
+}
+
+// ============================================================================
+// 7. VISUAL BROCHURE / DETAILED UNIVERSITY INFOGRAPHIC MODAL
+// ============================================================================
+function openUniDetailModal(progId) {
+  const raw = PROGRAMS.find(function(p) { return p.id === progId; });
+  if (!raw) return;
+  const p = evaluateProgram(raw, state.profile);
+  const meta = getUniversityMeta(p);
+  const prof = state.profile;
+  const isShortlisted = state.shortlist.includes(p.id);
+  const reg = state.userReg;
+
+  const gpaOk = prof.gpa >= p.gpa;
+  const ieltsOk = prof.ielts >= p.ielts;
+  const budgetOk = prof.budget >= p.netCost;
+
+  const tierClass = p.tier === "Safety"
+    ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border-emerald-500/30"
+    : (p.tier === "Match" ? "bg-sky-500/15 text-sky-600 dark:text-sky-300 border-sky-500/30" : "bg-amber-500/15 text-amber-600 dark:text-amber-300 border-amber-500/30");
+
+  const scoreVerdict = p.score >= 82 ? "Juda yuqori imkoniyat" : (p.score >= 65 ? "Yaxshi imkoniyat" : "Yuqori raqobat");
+  const netCostText = p.netCost === 0 ? "$0 (100% Grant)" : "$" + p.netCost.toLocaleString();
+  const netCostClass = p.netCost === 0 ? "text-brand-green" : "";
+  const levelFull = p.lvl === "B" ? "Bakalavr — 3–4 yil" : "Magistratura — 2 yil";
+  const countryClean = (COUNTRY_NAMES[p.cc] || p.cc).replace(/^[^\s]+\s/, "");
+  const ownerPrefix = reg ? (reg.firstName + "ning") : "Sizning";
+
+  const contentEl = document.getElementById("uni-detail-content");
+  const footerEl = document.getElementById("uni-detail-footer");
+
+  contentEl.innerHTML =
+    '<div class="relative">' +
+      buildCampusBannerSVG(p, true) +
+      '<button onclick="closeUniDetailModal()" aria-label="Yopish" class="absolute top-3 right-3 z-20 w-9 h-9 rounded-xl bg-black/50 hover:bg-red-500 text-white backdrop-blur-md flex items-center justify-center text-base font-bold transition">✕</button>' +
+    '</div>' +
+    '<div class="p-5 sm:p-7 space-y-6">' +
+      '<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-[var(--border)] pb-5">' +
+        '<div>' +
+          '<div class="flex flex-wrap items-center gap-2 mb-2">' +
+            '<span class="px-3 py-1 rounded-lg text-xs font-bold border ' + tierClass + '">' + p.tier + ' toifasi</span>' +
+            '<span class="px-3 py-1 rounded-lg text-xs font-semibold bg-brand-blue/10 text-brand-blue dark:text-brand-cyan">🏛️ Davlat Universiteti</span>' +
+            '<span class="px-3 py-1 rounded-lg text-xs font-mono font-semibold card-surface-2">' + meta.qsRank + '</span>' +
+          '</div>' +
+          '<h2 class="text-xl sm:text-2xl font-extrabold leading-tight">' + p.uni + '</h2>' +
+          '<p class="text-sm sm:text-base font-semibold text-brand-blue dark:text-brand-cyan mt-1">' + p.prog + ' (' + levelFull + ')</p>' +
+          '<p class="text-xs text-[var(--muted)] mt-1">' + (COUNTRY_NAMES[p.cc] || p.cc) + ' • ' + p.city + ' • Tashkil etilgan yili: ' + meta.founded + '</p>' +
+        '</div>' +
+        '<div class="card-surface-2 rounded-2xl p-4 text-center shrink-0 min-w-[135px] border border-brand-blue/25">' +
+          '<div class="text-[11px] font-mono uppercase text-[var(--muted)] font-bold">Sizga Moslik</div>' +
+          '<div class="text-3xl font-extrabold font-mono text-brand-blue dark:text-brand-cyan my-0.5">' + p.score + '%</div>' +
+          '<div class="text-[11px] text-brand-green font-semibold">' + scoreVerdict + '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">' +
+        '<div class="p-3.5 rounded-2xl card-surface-2">' +
+          '<div class="text-[11px] text-[var(--muted)] font-semibold">💰 Yillik Kontrakt / Grant</div>' +
+          '<div class="text-base sm:text-lg font-extrabold font-mono mt-1 ' + netCostClass + '">' + netCostText + '</div>' +
+          '<div class="text-[11px] text-[var(--muted)] mt-0.5">Asl kontrakt: $' + p.tuition.toLocaleString() + '</div>' +
+        '</div>' +
+        '<div class="p-3.5 rounded-2xl card-surface-2">' +
+          '<div class="text-[11px] text-[var(--muted)] font-semibold">📅 Hujjat Dedlayni</div>' +
+          '<div class="text-base sm:text-lg font-extrabold font-mono mt-1">' + p.dl[1] + '-' + MONTH_NAMES_UZ[p.dl[0] - 1] + '</div>' +
+          '<div class="text-[11px] text-[var(--muted)] mt-0.5">Kuzgi qabul (Fall Intake)</div>' +
+        '</div>' +
+        '<div class="p-3.5 rounded-2xl card-surface-2">' +
+          '<div class="text-[11px] text-[var(--muted)] font-semibold">👥 Talabalar & Qabul</div>' +
+          '<div class="text-base sm:text-lg font-extrabold font-mono mt-1">' + meta.students + '</div>' +
+          '<div class="text-[11px] text-[var(--muted)] mt-0.5">Qabul foizi: ~' + meta.acceptance + '</div>' +
+        '</div>' +
+        '<div class="p-3.5 rounded-2xl card-surface-2">' +
+          '<div class="text-[11px] text-[var(--muted)] font-semibold">🏠 Yashash Xarajati</div>' +
+          '<div class="text-sm sm:text-base font-extrabold font-mono mt-1">' + meta.livingCost + '</div>' +
+          '<div class="text-[11px] text-[var(--muted)] mt-0.5">Ta’lim tili: Ingliz / Mahalliy</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="grid md:grid-cols-12 gap-5">' +
+        '<div class="md:col-span-7 space-y-4">' +
+          '<div class="p-4 rounded-2xl card-surface-2 space-y-2">' +
+            '<h4 class="font-bold text-sm flex items-center gap-2">📘 Dastur haqida qisqacha ma’lumot</h4>' +
+            '<p class="text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">' +
+              '<strong>' + p.uni + '</strong> — ' + countryClean + 'ning nufuzli davlat oliy ta’lim muassasalaridan biri bo‘lib, <strong>' + p.field + '</strong> yo‘nalishida xalqaro standartlarga mos amaliy va ilmiy ta’lim beradi. Bitiruvchilar yetakchi xalqaro kompaniyalarda ishlash yoki magistratura/PhD bosqichini davom ettirish imkoniyatiga ega.' +
+            '</p>' +
+          '</div>' +
+          '<div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/25 space-y-2">' +
+            '<h4 class="font-bold text-sm text-amber-700 dark:text-amber-300 flex items-center gap-2">🏅 Grant va Moliyaviy Yordam: ' + p.schol + '</h4>' +
+            '<p class="text-xs sm:text-sm text-[var(--ink-2)] leading-relaxed">' +
+              'O‘zbekistonlik talabalar ushbu universitetga <strong>' + p.schol + '</strong> dasturi orqali hujjat topshirishlari mumkin. Qo‘shimcha imtihon/talab: <strong>' + p.test + '</strong>.' +
+            '</p>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="md:col-span-5 p-4 rounded-2xl card-surface-2 space-y-3">' +
+          '<h4 class="font-bold text-sm flex items-center gap-2">✅ ' + ownerPrefix + ' ko‘rsatkichlaringiz tahlili</h4>' +
+          '<div class="space-y-2.5 text-xs">' +
+            '<div class="p-2.5 rounded-xl card-surface flex items-center justify-between">' +
+              '<div><div class="font-semibold">Akademik GPA</div><div class="text-[var(--muted)]">Talab: ' + p.gpa + ' | Sizda: <b>' + prof.gpa + '</b></div></div>' +
+              '<span class="px-2 py-1 rounded-lg font-bold ' + (gpaOk ? "bg-brand-green/15 text-brand-green" : "bg-amber-500/15 text-amber-600") + '">' + (gpaOk ? "✓ Mos" : "! Past") + '</span>' +
+            '</div>' +
+            '<div class="p-2.5 rounded-xl card-surface flex items-center justify-between">' +
+              '<div><div class="font-semibold">IELTS Sertifikati</div><div class="text-[var(--muted)]">Talab: ' + p.ielts + ' | Sizda: <b>' + prof.ielts + '</b></div></div>' +
+              '<span class="px-2 py-1 rounded-lg font-bold ' + (ieltsOk ? "bg-brand-green/15 text-brand-green" : "bg-red-500/15 text-red-500") + '">' + (ieltsOk ? "✓ Mos" : "✗ Kerak") + '</span>' +
+            '</div>' +
+            '<div class="p-2.5 rounded-xl card-surface flex items-center justify-between">' +
+              '<div><div class="font-semibold">Yillik Byudjet</div><div class="text-[var(--muted)]">Sof xarajat: $' + p.netCost.toLocaleString() + ' | Sizda: <b>$' + prof.budget.toLocaleString() + '</b></div></div>' +
+              '<span class="px-2 py-1 rounded-lg font-bold ' + (budgetOk ? "bg-brand-green/15 text-brand-green" : "bg-amber-500/15 text-amber-600") + '">' + (budgetOk ? "✓ Yetarli" : "! Grant shart") + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  const slBtnClass = isShortlisted ? "bg-brand-green text-white" : "card-surface hover:border-brand-blue";
+  const slBtnText = isShortlisted ? "✓ Shortlistga qo‘shilgan" : "+ Shortlistga qo‘shish";
+
+  footerEl.innerHTML =
+    '<div class="flex flex-wrap items-center gap-2">' +
+      '<button onclick="toggleShortlist(\'' + p.id + '\'); openUniDetailModal(\'' + p.id + '\')" class="px-4 py-2.5 rounded-xl text-xs font-bold transition ' + slBtnClass + '">' + slBtnText + '</button>' +
+      '<button onclick="closeUniDetailModal(); openAiStrategyModal(\'' + p.id + '\')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-brand-blue/15 text-brand-blue dark:text-brand-cyan hover:bg-brand-blue hover:text-white transition">✨ AI Strategiya Tahlili</button>' +
+    '</div>' +
+    '<div class="flex items-center gap-2">' +
+      '<button onclick="openDocForProgram(\'' + p.id + '\')" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-brand-blue to-brand-cyan text-white shadow hover:opacity-95 transition">✍️ Motivation Letter yozish</button>' +
+      '<button onclick="closeUniDetailModal()" class="px-3.5 py-2.5 rounded-xl text-xs font-semibold card-surface hover:border-brand-blue transition">Yopish</button>' +
+    '</div>';
+
+  const modal = document.getElementById("uni-detail-modal");
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeUniDetailModal() {
+  const modal = document.getElementById("uni-detail-modal");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+}
+
+function openDocForProgram(progId) {
+  closeUniDetailModal();
+  closeAiModal();
+  switchWorkspaceTab("ai-docs");
+  document.getElementById("doc-uni-select").value = progId;
+  document.getElementById("workspace").scrollIntoView({ behavior: "smooth" });
+}
+
+// ============================================================================
+// 8. PRE-SCRIPTED SMART AI ENGINE (STRATEGY, COUNSELOR CHATBOT & DOC STUDIO)
+// ============================================================================
+function formatMarkdown(text) {
+  let html = text
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/^### (.*$)/gim, "<h4>$1</h4>")
+    .replace(/^## (.*$)/gim, "<h4>$1</h4>")
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/g, "<em>$1</em>")
+    .replace(/^\- (.*$)/gim, "<li>$1</li>")
+    .replace(/^\d+\. (.*$)/gim, "<li>$1</li>");
+
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, function(match) { return "<ul>" + match + "</ul>"; });
+  html = html.split(/\n\n+/).map(function(p) {
+    if (p.startsWith("<h4>") || p.startsWith("<ul>")) return p;
+    return "<p>" + p.replace(/\n/g, "<br>") + "</p>";
+  }).join("");
+  return html;
+}
+
+function callSmartAI(userMessage, contextType, extraData) {
+  return new Promise(function(resolve) {
+    setTimeout(function() {
+      const prof = state.profile;
+      const reg = state.userReg || {
+        firstName: "Talaba",
+        lastName: "",
+        institution: "O‘zbekiston ta’lim muassasasi",
+        age: 18
+      };
+      const fullName = (reg.firstName + " " + reg.lastName).trim();
+      const lvlText = prof.lvl === "B" ? "Bakalavr" : "Magistratura";
+      const q = (userMessage || "").toLowerCase();
+
+      const topMatches = PROGRAMS
+        .filter(function(p) { return p.lvl === prof.lvl && (prof.field === "ALL" || p.field === prof.field); })
+        .map(function(p) { return evaluateProgram(p, prof); })
+        .sort(function(a, b) { return b.score - a.score; });
+
+      // CASE A: Individual University Strategy
+      if (contextType === "strategy" && extraData && extraData.prog) {
+        const p = extraData.prog;
+        const gpaNote = prof.gpa >= p.gpa
+          ? "Sizning GPA ko‘rsatkichingiz (**" + prof.gpa + "**) minimal talab (**" + p.gpa + "**) dan yuqori — bu katta ustunlik."
+          : "Minimal GPA talabi **" + p.gpa + "** (sizda **" + prof.gpa + "**). Kuchli Motivation Letter va olimpiada/loyihalar orqali o‘rnini to‘ldirish tavsiya etiladi.";
+        const ieltsNote = prof.ielts >= p.ielts
+          ? "IELTS ballingiz (**" + prof.ielts + "**) talabga (**" + p.ielts + "**) to‘liq javob beradi."
+          : "IELTS ballingizni **" + p.ielts + "** darajasiga ko‘tarish talab etiladi.";
+
+        resolve(
+          "### 1. " + reg.firstName + " uchun qabul imkoniyati (" + p.score + "% Fit Score)\n" +
+          "- " + gpaNote + "\n" +
+          "- " + ieltsNote + "\n\n" +
+          "### 2. Grant va moliyaviy strategiya (" + p.schol + ")\n" +
+          "- Ushbu dasturda **" + p.schol + "** orqali o‘qish xarajatlaringizni qoplash imkoniyati mavjud.\n" +
+          "- Grant yutgan taqdirda yillik sof xarajatingiz taxminan **$" + p.netCost.toLocaleString() + "** atrofida bo‘ladi (sizning byudjetingiz: **$" + prof.budget.toLocaleString() + "**).\n\n" +
+          "### 3. O‘zbekistonlik abituriyent uchun muhim talablar\n" +
+          "- Hozirgi o‘qish joyingiz (**" + reg.institution + "**) dan olingan baholar tabeli / diplomni ingliz tiliga notarial tarjima qiling.\n" +
+          "- Qo‘shimcha talab: **" + p.test + "**.\n\n" +
+          "### 4. Hozir boshlash kerak bo‘lgan 3 ta amaliy qadam\n" +
+          "- **1-qadam:** Rasmiy dedlayn (**" + p.dl[1] + "-" + MONTH_NAMES_UZ[p.dl[0] - 1] + "**) dan kamida 45 kun oldin hujjatlarni tayyorlang.\n" +
+          "- **2-qadam:** AI Hujjatlar Studio bo‘limida **" + p.short + "** uchun maxsus Motivation Letter yarating.\n" +
+          "- **3-qadam:** Dasturni Shortlistga qo‘shib, **.ICS taqvim** eslatmasini yuklab oling."
+        );
+        return;
+      }
+
+      // CASE B: AI Document Studio
+      if (contextType === "document" && extraData) {
+        const p = extraData.prog;
+        const docType = extraData.docType;
+        const lang = extraData.lang;
+        const achEn = extraData.achievements || "strong academic performance, analytical problem-solving skills, and active participation in youth projects";
+        const achUz = extraData.achievements || "yuqori akademik o‘zlashtirish, tahliliy fikrlash va yoshlar loyihalaridagi faol ishtirok";
+        const countryClean = (COUNTRY_NAMES[p.cc] || p.cc).replace(/^[^\s]+\s/, "");
+
+        if (docType === "sop") {
+          if (lang === "en") {
+            resolve(
+              "MOTIVATION LETTER — " + p.uni.toUpperCase() + "\n" +
+              "Applicant: " + fullName + " (Age: " + reg.age + ")\n" +
+              "Current Institution: " + reg.institution + ", Uzbekistan\n" +
+              "Target Program: " + p.prog + " (" + (p.lvl === "B" ? "Bachelor's" : "Master's") + ")\n" +
+              "Scholarship Track: " + p.schol + "\n\n" +
+              "Dear Admissions and Scholarship Committee,\n\n" +
+              "My name is " + fullName + ", and I am currently studying at " + reg.institution + " in Uzbekistan. I am writing to express my strong motivation to apply for the " + p.prog + " program at " + p.uni + ", as well as to be considered for the " + p.schol + ".\n\n" +
+              "Throughout my studies at " + reg.institution + ", I have maintained a solid academic record with a GPA of " + prof.gpa + "/5.0 and achieved an IELTS score of " + prof.ielts + ". Beyond coursework, my academic journey has been shaped by " + achEn + ". These experiences motivated me to pursue an internationally recognized degree at " + p.uni + " in " + p.city + ".\n\n" +
+              "Studying in " + countryClean + " will equip me with global methodologies and hands-on expertise. Upon completing my studies, I plan to return to Uzbekistan and contribute to modernizing our national " + p.field + " sector.\n\n" +
+              "Thank you very much for considering my application.\n\n" +
+              "Sincerely,\n" + fullName
+            );
+          } else {
+            resolve(
+              "MOTIVATION LETTER (MOTIVATSION XAT) — " + p.uni.toUpperCase() + "\n" +
+              "Nomzod: " + fullName + " (" + reg.age + " yosh)\n" +
+              "O‘qish joyi: " + reg.institution + ", O‘zbekiston\n" +
+              "Yo‘nalish: " + p.prog + "\n" +
+              "Grant dasturi: " + p.schol + "\n\n" +
+              "Hurmatli Qabul va Grant Komissiyasi a’zolari,\n\n" +
+              "Men, " + fullName + ", hozirda O‘zbekistondagi " + reg.institution + " da tahsil olmoqdaman. Sizlarga " + p.uni + " ning \"" + p.prog + "\" dasturiga hamda " + p.schol + " grantiga hujjat topshirish maqsadida murojaat qilmoqdaman.\n\n" +
+              reg.institution + " dagi o‘qishim davomida GPA ko‘rsatkichimni " + prof.gpa + "/5.0 darajada saqlab, IELTS " + prof.ielts + " sertifikatini qo‘lga kiritdim. Shuningdek, " + achUz + " kabi tajribalar menda " + p.field + " sohasiga bo‘lgan qiziqishni yanada oshirdi.\n\n" +
+              p.uni + " da ta’lim olish menga xalqaro tajriba orttirish va kelajakda O‘zbekistonda ushbu sohani rivojlantirishga munosib hissa qo‘shish imkonini beradi.\n\n" +
+              "E’tiboringiz uchun tashakkur.\n\n" +
+              "Hurmat bilan,\n" + fullName
+            );
+          }
+          return;
+        }
+
+        if (docType === "cv") {
+          resolve(
+            lang === "en"
+              ? "ACADEMIC CV — SUMMARY & HIGHLIGHTS\nName: " + fullName + " | Age: " + reg.age + " | Uzbekistan\nCurrent Education: " + reg.institution + " (GPA: " + prof.gpa + "/5.0)\nLanguage Proficiency: English — IELTS " + prof.ielts + "\nTarget Program: " + p.prog + " at " + p.uni + "\n\nKEY ACHIEVEMENTS:\n• Maintained " + prof.gpa + "/5.0 GPA at " + reg.institution + ".\n• Practical Experience: " + achEn + ".\n• Shortlisted " + p.uni + " (" + p.schol + ")."
+              : "AKADEMIK CV — ASOSIY YUTUQLAR BLOKI\nF.I.Sh.: " + fullName + " | Yoshi: " + reg.age + " | O‘zbekiston\nO‘qish joyi: " + reg.institution + " (GPA: " + prof.gpa + "/5.0)\nTil darajasi: Ingliz tili — IELTS " + prof.ielts + "\nMaqsadli dastur: " + p.uni + " — " + p.prog + "\n\nASOSIY YUTUQLAR:\n• " + reg.institution + " da " + prof.gpa + "/5.0 GPA ko‘rsatkichi.\n• Amaliy tajriba: " + achUz + ".\n• " + p.schol + " granti nomzodi."
+          );
+          return;
+        }
+
+        resolve(
+          lang === "en"
+            ? "Subject: Prospective Applicant (" + p.prog + ") — " + fullName + "\n\nDear Professor,\n\nMy name is " + fullName + " (" + reg.age + " years old), currently studying at " + reg.institution + " in Uzbekistan (GPA: " + prof.gpa + "/5.0, IELTS: " + prof.ielts + "). I am preparing my application for " + p.prog + " at " + p.uni + " under the " + p.schol + " track.\n\nMy background includes " + achEn + ". I would be grateful to know if you are accepting new students for the upcoming intake.\n\nBest regards,\n" + fullName
+            : "Mavzu: " + p.prog + " dasturiga nomzod talaba — " + fullName + "\n\nHurmatli Professor,\n\nMening ismim " + fullName + " (" + reg.age + " yosh), hozirda O‘zbekistondagi " + reg.institution + " da tahsil olmoqdaman (GPA: " + prof.gpa + "/5.0, IELTS: " + prof.ielts + "). Men " + p.uni + " ning " + p.prog + " dasturiga " + p.schol + " granti asosida hujjat topshirmoqchiman.\n\nTajribam: " + achUz + ". Kelgusi o‘quv yili uchun yangi talabalar qabul qilyapsizmi?\n\nHurmat bilan,\n" + fullName
+        );
+        return;
+      }
+
+      // CASE C: Pre-Scripted Smart AI Chatbot Responses
+      if (q.includes("turkiya") || q.includes("türkiye") || q.includes("burs") || q.includes("ytb")) {
+        const trUnis = PROGRAMS.filter(function(p) { return p.cc === "TR" && p.lvl === prof.lvl; }).slice(0, 3)
+          .map(function(p) { return "- **" + p.uni + "** (" + p.city + ") — *" + p.prog + "*"; })
+          .join("\n");
+        resolve(
+          "### 🇹🇷 Türkiye Bursları (Turkiya Hukumati Granti) — To‘liq Qo‘llanma\n" +
+          "**" + reg.firstName + "**, Türkiye Bursları O‘zbekistonlik abituriyent va magistrantlar uchun eng keng qamrovli davlat grantlaridan biridir:\n\n" +
+          "- **Nimalarni qoplaydi:** 100% kontrakt bepul + har oy stipendiya + davlat yotoqxonasi + borish-kelish aviachipta + tibbiy sug‘urta + 1 yillik bepul Turk tili kursi.\n" +
+          "- **Asosiy bosqichlar:** 1-bosqich — Onlayn ariza va hujjat saralash; 2-bosqich — Suhbat (odatda Toshkent yoki onlayn).\n" +
+          "- **Sizning bosqichingiz (" + lvlText + ") uchun top Turkiya davlat OTMlari:**\n" +
+          (trUnis || "- **Istanbul Technical University (İTÜ)**, **METU (ODTÜ)**, **Boğaziçi University**.") + "\n\n" +
+          "💡 **Maslahat:** **«🏅 Grant & Stipendiyalar»** bo‘limida *Türkiye Bursları* kartochkasini ham ko‘ring."
+        );
+        return;
+      }
+
+      if (q.includes("gks") || q.includes("mext") || q.includes("chevening") || q.includes("koreya") || q.includes("yaponiya")) {
+        resolve(
+          "### 🌏 Xalqaro Davlat Grant Dasturlari Taqqoslamasi\n" +
+          "**" + reg.firstName + "**, mana eng nufuzli 3 ta davlat granti haqida qisqa ma’lumot:\n\n" +
+          "- **🇰🇷 GKS (Global Korea Scholarship):** Janubiy Koreya hukumati granti. 100% kontrakt + 1 yil til kursi + oylik stipendiya + aviachipta. Bakalavr va Magistratura uchun mavjud.\n" +
+          "- **🇯🇵 MEXT (Yaponiya):** Yaponiya hukumat granti. 100% kontrakt + oylik stipendiya + aviachipta. Elchixona yoki universitet orqali topshiriladi.\n" +
+          "- **🇬🇧 Chevening (Buyuk Britaniya):** 1 yillik Magistratura uchun 100% grant. Muhim talab — kamida **2 yillik ish tajribasi** va yetakchilik salohiyati."
+        );
+        return;
+      }
+
+      if (q.includes("osonroq") || q.includes("imkoniyat") || q.includes("qaysi universitet")) {
+        const listStr = topMatches.slice(0, 4)
+          .map(function(p) { return "- **" + p.uni + "** (" + (COUNTRY_NAMES[p.cc] || p.cc) + ") — *" + p.prog + "* | Fit Score: **" + p.score + "%** | Grant: **" + p.schol + "**"; })
+          .join("\n");
+        resolve(
+          "Salom, **" + reg.firstName + "**! **" + reg.institution + "** o‘quvchisi/talabasi sifatida joriy ko‘rsatkichlaringiz (**" + lvlText + "**, GPA **" + prof.gpa + "**, IELTS **" + prof.ielts + "**, byudjet **$" + prof.budget.toLocaleString() + "**) bo‘yicha kirish ehtimoli eng yuqori davlat universitetlari:\n\n" +
+          listStr + "\n\n💡 **Maslahat:** Ushbu universitetlar kartochkasidagi **«🖼️ Batafsil ma’lumot»** tugmasini bosib to‘liq tahlilni ko‘ring."
+        );
+        return;
+      }
+
+      if (q.includes("6.5") || q.includes("ielts")) {
+        const ieltsList = topMatches.filter(function(p) { return p.ielts <= 6.5; }).slice(0, 4)
+          .map(function(p) { return "- **" + p.uni + "** (" + (COUNTRY_NAMES[p.cc] || p.cc) + ") — " + p.prog + " (Talab: IELTS " + p.ielts + ", Grant: **" + p.schol + "**)"; })
+          .join("\n");
+        resolve(
+          "**" + reg.firstName + "**, **IELTS 6.5** ko‘rsatkichi Yevropa va Osiyoning 85% top davlat universitetlari va 100% hukumat grantlari uchun yetarli! Siz uchun eng yaxshi variantlar:\n\n" +
+          ieltsList + "\n\nUshbu dasturlarning aksariyatida kontrakt **$0** yoki **100% davlat granti** mavjud."
+        );
+        return;
+      }
+
+      if (q.includes("germaniya") || q.includes("vengriya") || q.includes("daad") || q.includes("stipendium")) {
+        resolve(
+          "**" + reg.firstName + "**, **Germaniya (DAAD)** va **Vengriya (Stipendium Hungaricum)** O‘zbekistonlik yoshlar uchun eng mashhur 2 ta yo‘nalishdir:\n\n" +
+          "- **🇭🇺 Stipendium Hungaricum (Vengriya):** 100% kontrakt bepul + har oy stipendiya + bepul yotoqxona + tibbiy sug‘urta. 11-sinf attestati bilan to‘g‘ridan-to‘g‘ri 1-kursga kirish mumkin (IELTS 5.5–6.5). Dedlayn: **15-yanvar**.\n" +
+          "- **🇩🇪 Germaniya davlat OTMlari + DAAD:** Davlat universitetlarida o‘qish barcha uchun **$0 (bepul)** (faqat semestr to‘lovi ~€300). Bakalavr uchun 1 yil *Studienkolleg* yoki O‘zbekistonda 1-kursni tugatish kerak; Magistratura uchun esa to‘g‘ridan-to‘g‘ri topshiriladi."
+        );
+        return;
+      }
+
+      if (q.includes("motivation") || q.includes("sop") || q.includes("esse")) {
+        resolve(
+          "**" + reg.firstName + "**, kuchli **Motivation Letter (SOP)** yozishda qabul komissiyasi 4 ta asosiy narsaga qaraydi:\n\n" +
+          "1. **Aniq maqsad:** Nega aynan shu yo‘nalish va nega aynan shu universitetni tanladingiz?\n" +
+          "2. **Shaxsiy tajriba:** **" + reg.institution + "** dagi o‘qishingiz, olimpiada yoki loyihangizdan konkret misol keltiring.\n" +
+          "3. **Kelajak rejasi:** O‘qishni bitirgach O‘zbekistonga qanday foyda keltirasiz?\n" +
+          "4. **Tayyor shablon:** Hozirning o‘zida **«✍️ AI Hujjatlar Studio»** bo‘limiga o‘tsangiz, sizning ismingiz (**" + fullName + "**) bilan tayyor xat generatsiya qilib beraman!"
+        );
+        return;
+      }
+
+      if (q.includes("portfel") || q.includes("5 ta")) {
+        const p5 = topMatches.slice(0, 5)
+          .map(function(p, idx) { return (idx + 1) + ". **" + p.uni + "** (" + p.tier + " — " + p.score + "%) — *" + p.prog + "* | Grant: " + p.schol; })
+          .join("\n");
+        resolve(
+          "**" + reg.firstName + "**, siz uchun **Safety / Match / Reach** balansiga asoslangan 5 ta davlat universitetidan iborat ideal portfel:\n\n" +
+          p5 + "\n\nUshbu ro‘yxatni **«Mos Dasturlar»** bo‘limida tanlab, shaxsiy dedlaynlar taqvimini (.ics) yuklab olishingiz mumkin."
+        );
+        return;
+      }
+
+      const best = topMatches[0];
+      resolve(
+        "Salom, **" + reg.firstName + "**! **" + reg.institution + "** (" + reg.age + " yosh) vakili sifatida savolingizni tayyor AI bilim bazasi asosida tahlil qildim.\n\n" +
+        "Sizning joriy profilingiz (**" + lvlText + "**, GPA **" + prof.gpa + "**, IELTS **" + prof.ielts + "**, byudjet **$" + prof.budget.toLocaleString() + "**) uchun eng mos dasturlardan biri:\n" +
+        "- **" + (best ? best.uni : "İTÜ Istanbul") + "** — *" + (best ? best.prog : "Engineering") + "* (" + (best ? best.score : 90) + "% moslik, Grant: **" + (best ? best.schol : "Türkiye Bursları") + "**).\n\n" +
+        "Batafsil javob olish uchun chap tarafdagi **tayyor savol tugmalarini** bosing yoki **«Türkiye Burslari»**, **«IELTS 6.5»**, **«Germaniya»**, **«GKS»**, **«Motivation letter»**, **«portfel»** kalit so‘zlari bilan savol yozing!"
+      );
+    }, 380);
+  });
+}
+
+async function openAiStrategyModal(progId) {
+  const raw = PROGRAMS.find(function(p) { return p.id === progId; });
+  if (!raw) return;
+  const prog = evaluateProgram(raw, state.profile);
+
+  const modal = document.getElementById("ai-modal");
+  const titleEl = document.getElementById("ai-modal-title");
+  const bodyEl = document.getElementById("ai-modal-body");
+  const docBtn = document.getElementById("ai-modal-doc-btn");
+
+  titleEl.textContent = prog.uni + " — " + prog.prog;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+
+  docBtn.onclick = function() {
+    openDocForProgram(prog.id);
+  };
+
+  bodyEl.innerHTML = '<div class="p-4 rounded-2xl ai-shimmer space-y-2"><div class="font-bold text-brand-blue dark:text-brand-cyan text-sm">⏳ Smart AI sizning profilingiz va ' + prog.short + ' talablarini solishtirmoqda...</div></div>';
+
+  const aiText = await callSmartAI("", "strategy", { prog: prog });
+  bodyEl.innerHTML = '<div class="ai-prose">' + formatMarkdown(aiText) + '</div>';
+}
+
+function closeAiModal() {
+  const modal = document.getElementById("ai-modal");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+}
+
+function sendQuickPrompt(text) {
+  const input = document.getElementById("ai-chat-input");
+  input.value = text;
+  handleChatSubmit({ preventDefault: function() {} });
+}
+
+async function handleChatSubmit(e) {
+  e.preventDefault();
+  const input = document.getElementById("ai-chat-input");
+  const sendBtn = document.getElementById("ai-chat-send-btn");
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  input.value = "";
+  appendChatMessage("user", msg);
+
+  const loadingId = "ai-loading-" + Date.now();
+  appendChatLoading(loadingId);
+  sendBtn.disabled = true;
+
+  const reply = await callSmartAI(msg, "chat");
+  const loadEl = document.getElementById(loadingId);
+  if (loadEl) loadEl.remove();
+  appendChatMessage("ai", reply);
+  sendBtn.disabled = false;
+}
+
+function appendChatMessage(role, text) {
+  const box = document.getElementById("ai-chat-messages");
+  const div = document.createElement("div");
+  if (role === "user") {
+    div.className = "flex justify-end";
+    div.innerHTML = '<div class="bg-brand-blue text-white rounded-2xl rounded-tr-none px-4 py-3 text-xs sm:text-sm max-w-md shadow">' + text.replace(/</g, "&lt;") + '</div>';
+  } else {
+    div.className = "flex items-start gap-3";
+    div.innerHTML = '<div class="w-8 h-8 rounded-xl bg-brand-blue text-white flex items-center justify-center text-sm shrink-0 mt-0.5">🤖</div><div class="card-surface-2 rounded-2xl rounded-tl-none p-4 text-xs sm:text-sm text-[var(--ink)] max-w-2xl leading-relaxed ai-prose">' + formatMarkdown(text) + '</div>';
+  }
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+function appendChatLoading(id) {
+  const box = document.getElementById("ai-chat-messages");
+  const div = document.createElement("div");
+  div.id = id;
+  div.className = "flex items-start gap-3";
+  div.innerHTML = '<div class="w-8 h-8 rounded-xl bg-brand-blue text-white flex items-center justify-center text-sm shrink-0">⏳</div><div class="card-surface-2 rounded-2xl px-4 py-3 text-xs text-[var(--muted)] ai-shimmer">AI Chatbot tayyor bilim bazasidan javob izlamoqda...</div>';
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+function clearAiChat() {
+  const box = document.getElementById("ai-chat-messages");
+  if (!box) return;
+  const reg = state.userReg;
+  const greeting = reg
+    ? "Salom, <strong>" + reg.firstName + "</strong>! Men oldindan tayyorlangan ssenariylar asosida ishlaydigan <strong>UniPath AI Chatbot</strong>man. <strong>" + reg.institution + "</strong> (" + reg.age + " yosh) vakili sifatida sizga <em>Türkiye Bursları</em>, davlat universitetlari va xalqaro grantlar bo‘yicha darhol javob beraman."
+    : "Assalomu alaykum! Men <strong>UniPath AI Chatbot</strong> — oldindan tayyorlangan bilim bazasi va ssenariylar asosida davlat universitetlari hamda grantlar bo‘yicha javob beruvchi yordamchingizman.";
+
+  box.innerHTML =
+    '<div class="flex items-start gap-3">' +
+      '<div class="w-8 h-8 rounded-xl bg-brand-blue text-white flex items-center justify-center text-sm shrink-0 mt-0.5">🤖</div>' +
+      '<div class="card-surface-2 rounded-2xl rounded-tl-none p-4 text-xs sm:text-sm text-[var(--ink)] max-w-2xl leading-relaxed ai-prose">' +
+        '<p>' + greeting + '</p>' +
+        '<p>Chap tarafdagi <strong>tayyor savol tugmalaridan</strong> birini bosing yoki savol yozing!</p>' +
+      '</div>' +
+    '</div>';
+}
+
+async function generateAiDocument() {
+  const uniId = document.getElementById("doc-uni-select").value;
+  const docType = document.getElementById("doc-type-select").value;
+  const lang = document.getElementById("doc-lang-select").value;
+  const achievements = document.getElementById("doc-achievements").value.trim();
+
+  const prog = PROGRAMS.find(function(p) { return p.id === uniId; });
+  if (!prog) return;
+
+  const btn = document.getElementById("doc-generate-btn");
+  const outArea = document.getElementById("doc-output-area");
+  const outTitle = document.getElementById("doc-output-title");
+
+  btn.disabled = true;
+  btn.textContent = "⏳ Smart AI matn yozmoqda...";
+  outArea.value = "Iltimos kuting, Smart AI sizning ism-familiyangiz, o‘qish joyingiz va universitet talablari asosida hujjat tayyorlamoqda...";
+
+  const docLabels = {
+    sop: "Motivation Letter (SOP)",
+    cv: "Academic CV yutuqlar bloki",
+    email: "Professorga xat (Cold Email)"
+  };
+  outTitle.textContent = prog.short + " — " + docLabels[docType];
+
+  const draft = await callSmartAI("", "document", {
+    prog: prog,
+    docType: docType,
+    lang: lang,
+    achievements: achievements
+  });
+
+  outArea.value = draft.trim();
+  updateWordCount();
+  btn.disabled = false;
+  btn.innerHTML = "<span>✨ Smart AI bilan hujjat yaratish</span>";
+  showToast("Hujjat muvaffaqiyatli yaratildi!", "success");
+}
+
+function updateWordCount() {
+  const text = document.getElementById("doc-output-area").value.trim();
+  const count = text ? text.split(/\s+/).length : 0;
+  document.getElementById("doc-word-count").textContent = count + " so‘z";
+}
+
+function copyDocOutput() {
+  const area = document.getElementById("doc-output-area");
+  if (!area.value.trim()) return;
+  area.select();
+  document.execCommand("copy");
+  showToast("Matn buferga nusxalandi!", "success");
+}
+
+function downloadDocTxt() {
+  const text = document.getElementById("doc-output-area").value.trim();
+  if (!text) return;
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "unipath_document.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast("Fayl yuklab olindi!", "success");
+}
+
+// ============================================================================
+// 9. NAVIGATION, THEME & TOAST HELPERS
+// ============================================================================
+function switchWorkspaceTab(tabName) {
+  const tabs = ["matches", "scholarships", "ai-chat", "ai-docs", "roadmap"];
+  tabs.forEach(function(t) {
+    const panel = document.getElementById("panel-" + t);
+    const btn = document.getElementById("tab-btn-" + t);
+    if (!panel || !btn) return;
+    if (t === tabName) {
+      panel.classList.remove("hidden");
+      btn.classList.add("bg-brand-blue", "text-white", "shadow");
+      btn.classList.remove("text-[var(--ink-2)]");
+    } else {
+      panel.classList.add("hidden");
+      btn.classList.remove("bg-brand-blue", "text-white", "shadow");
+      btn.classList.add("text-[var(--ink-2)]");
+    }
+  });
+  if (tabName === "roadmap") renderRoadmap();
+  if (tabName === "scholarships") renderScholarships();
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.classList.toggle("dark");
+  localStorage.setItem("unipath-theme", isDark ? "dark" : "light");
+  document.getElementById("theme-icon").textContent = isDark ? "☀️" : "🌙";
+}
+
+function showToast(message, type) {
+  const container = document.getElementById("toast-container");
+  const el = document.createElement("div");
+  const bg = type === "success" ? "bg-emerald-600" : "bg-slate-800";
+  el.className = bg + " text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg pointer-events-auto transition";
+  el.textContent = message;
+  container.appendChild(el);
+  setTimeout(function() { el.remove(); }, 2600);
+}
+
+function initApp() {
+  // Populate Country Dropdown
+  const countrySelect = document.getElementById("filter-country");
+  const uniqueCC = [];
+  PROGRAMS.forEach(function(p) {
+    if (!uniqueCC.includes(p.cc)) uniqueCC.push(p.cc);
+  });
+  uniqueCC.forEach(function(cc) {
+    const opt = document.createElement("option");
+    opt.value = cc;
+    opt.textContent = COUNTRY_NAMES[cc] || cc;
+    countrySelect.appendChild(opt);
+  });
+
+  // Populate Document Studio University Dropdown
+  const docUniSelect = document.getElementById("doc-uni-select");
+  PROGRAMS.forEach(function(p) {
+    const opt = document.createElement("option");
+    opt.value = p.id;
+    opt.textContent = p.short + " — " + p.prog + " (" + (p.lvl === "B" ? "Bakalavr" : "Magistratura") + ")";
+    docUniSelect.appendChild(opt);
+  });
+
+  renderPrograms();
+  renderScholarships();
+  renderRoadmap();
+  clearAiChat();
+}
+
+window.addEventListener("DOMContentLoaded", function() {
+  const savedTheme = localStorage.getItem("unipath-theme");
+  if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    document.documentElement.classList.add("dark");
+    document.getElementById("theme-icon").textContent = "☀️";
+  }
+  initApp();
+  const isRegistered = loadUserRegistration();
+  if (!isRegistered) {
+    openOnboardingModal(false);
+  }
+});
+</script>
+</body>
+</html>
